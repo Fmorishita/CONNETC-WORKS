@@ -21,6 +21,34 @@ function readBody(req) {
 }
 
 function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function esc(v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+// Emails a new lead to LEAD_NOTIFY_EMAIL via Resend, if configured.
+// The recipient address lives ONLY in an env var (never in the public site).
+async function notifyByEmail(lead) {
+  var key = process.env.RESEND_API_KEY;
+  var to = process.env.LEAD_NOTIFY_EMAIL;
+  if (!key || !to) return; // email disabled until configured
+  var from = process.env.LEAD_FROM_EMAIL || 'ConnectWorks Leads <onboarding@resend.dev>';
+  var rows = [
+    ['Name', lead.name], ['Business', lead.business], ['Phone', lead.phone], ['Email', lead.email],
+    ['Business type', lead.business_type], ['Service', lead.service], ['Project type', lead.project_type],
+    ['Timeline', lead.timeline], ['Budget', lead.budget], ['Details', lead.message],
+    ['Campaign', [lead.utm_source, lead.utm_medium, lead.utm_campaign].filter(Boolean).join(' / ')]
+  ];
+  var html = '<h2 style="font-family:Arial">New ConnectWorks lead</h2>'
+    + '<table style="font-family:Arial;border-collapse:collapse">'
+    + rows.map(function (r) { return '<tr><td style="padding:4px 10px"><b>' + esc(r[0]) + '</b></td><td style="padding:4px 10px">' + (esc(r[1]) || '-') + '</td></tr>'; }).join('')
+    + '</table>';
+  var text = rows.map(function (r) { return r[0] + ': ' + (r[1] || '-'); }).join('\n');
+  var subject = 'New lead: ' + (lead.name || 'Website') + (lead.business ? ' (' + lead.business + ')' : '');
+  var resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: from, to: [to], reply_to: lead.email || undefined, subject: subject, html: html, text: text })
+  });
+  if (!resp.ok) { console.error('Resend email failed:', resp.status, await resp.text().catch(function () { return ''; })); }
+}
 function digits(v) { return String(v || '').replace(/\D/g, ''); }
 function clean(v) { var s = String(v == null ? '' : v).trim(); return s || null; }
 
@@ -105,6 +133,9 @@ module.exports = async function handler(req, res) {
       res.statusCode = 500;
       return res.end(JSON.stringify({ ok: false, error: 'Could not save your request.' }));
     }
+
+    // Lead is saved; try to email it (never fail the request if email errors).
+    try { await notifyByEmail(full); } catch (e) { console.error('Lead email error:', e); }
 
     res.statusCode = 200;
     return res.end(JSON.stringify({ ok: true }));
