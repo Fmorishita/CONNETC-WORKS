@@ -556,6 +556,11 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .hero-map__svg{width:100%;height:auto;display:block}
 .hero-map__chip{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(8,17,35,.74);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(125,211,252,.25);color:#fff;padding:9px 14px;border-radius:var(--radius-pill);font-size:.82rem;font-weight:600;box-shadow:var(--shadow-md)}
 .hero-map__chip .ic{width:16px;height:16px;color:var(--cyan-400)}
+/* map animations */
+.hm-pin-ring{transform-origin:200px 410px;animation:hmPing 2.4s ease-out infinite}
+@keyframes hmPing{0%{transform:scale(.5);opacity:.6}70%{transform:scale(2.4);opacity:0}100%{opacity:0}}
+.hm-border{animation:hmDash 18s linear infinite}
+@keyframes hmDash{to{stroke-dashoffset:-280}}
 
 /* =========================================================
    NEW SECTIONS (commercial revamp)
