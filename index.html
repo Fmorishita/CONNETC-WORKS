@@ -242,32 +242,48 @@
           <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> 1-Year Labor &amp; Equipment Warranty</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> San Diego County Local Support</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg> Honest Recommendations</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-office"/></svg> Commercial Installations</li>
         </ul>
       </div>
 
       <div class="hero__visual reveal">
-        <div class="hero-panel" role="img" aria-label="Commercial low voltage systems ConnectWorks designs and installs">
-          <div class="hero-panel__top">
-            <span class="hero-panel__badge"><span class="pulse"></span> Your commercial systems, one partner</span>
-          </div>
-          <div class="hero-panel__grid">
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg><span>Video Surveillance</span></div>
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span>Access Control</span></div>
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-cable"/></svg><span>Structured Cabling</span></div>
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-wifi"/></svg><span>Network &amp; Wi-Fi</span></div>
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-intercom"/></svg><span>Intercom</span></div>
-            <div class="hero-panel__item"><svg class="ic" aria-hidden="true"><use href="#i-av"/></svg><span>Commercial AV</span></div>
-          </div>
-          <div class="hero-panel__foot">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg> No unnecessary upsells</span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> San Diego County</span>
-          </div>
-        </div>
-        <div class="hero-stat-card">
-          <div><strong>10+ yrs</strong><span>Field experience</span></div>
-          <div><strong>1 Year</strong><span>Labor &amp; equipment warranty</span></div>
-          <div><strong>San&nbsp;Diego</strong><span>Local team</span></div>
+        <div class="hero-map" role="img" aria-label="ConnectWorks service area: all of San Diego County, including San Diego, Oceanside, Carlsbad, Escondido, El Cajon and Chula Vista">
+          <svg viewBox="0 0 520 470" class="hero-map__svg">
+            <defs>
+              <linearGradient id="hmbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1B3D"/><stop offset="1" stop-color="#0B2C66"/></linearGradient>
+              <linearGradient id="hmocean" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#06122b"/><stop offset="1" stop-color="#0a1e44"/></linearGradient>
+              <pattern id="hmgrid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#7DD3FC" stroke-opacity=".08"/></pattern>
+            </defs>
+            <rect width="520" height="470" rx="22" fill="url(#hmbg)"/>
+            <rect width="520" height="470" rx="22" fill="url(#hmgrid)"/>
+            <!-- ocean -->
+            <path d="M0 0 L150 0 C132 110,128 220,150 320 C158 360,168 400,172 470 L0 470 Z" fill="url(#hmocean)" opacity=".85"/>
+            <!-- faint freeways -->
+            <g stroke="#7DD3FC" stroke-opacity=".12" stroke-width="2" fill="none">
+              <path d="M168 40 C176 180,176 260,184 460"/>
+              <path d="M175 300 L470 250"/>
+              <path d="M170 150 L460 120"/>
+            </g>
+            <!-- service-area highlight -->
+            <rect x="52" y="46" width="416" height="388" rx="18" fill="#38BDF8" fill-opacity=".13" stroke="#38BDF8" stroke-opacity=".75" stroke-width="2.5" stroke-dasharray="7 6"/>
+            <!-- coastline -->
+            <path d="M150 0 C132 110,128 220,150 320 C158 360,168 400,172 470" fill="none" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="2"/>
+            <!-- cities -->
+            <g font-family="Inter, 'Segoe UI', sans-serif" font-size="16.5" font-weight="600">
+              <g fill="#7DD3FC"><circle cx="150" cy="84" r="4.2"/><circle cx="150" cy="122" r="4.2"/><circle cx="305" cy="122" r="4.2"/><circle cx="330" cy="266" r="4.2"/><circle cx="196" cy="366" r="4.2"/></g>
+              <g fill="#cbd5e1">
+                <text x="163" y="90">Oceanside</text>
+                <text x="163" y="128">Carlsbad</text>
+                <text x="318" y="128">Escondido</text>
+                <text x="343" y="272">El Cajon</text>
+                <text x="209" y="372">Chula Vista</text>
+              </g>
+              <!-- San Diego marker -->
+              <path d="M175 284c-9 0-16 7-16 16 0 12 16 28 16 28s16-16 16-28c0-9-7-16-16-16z" fill="#38BDF8"/>
+              <circle cx="175" cy="300" r="5.5" fill="#0A1B3D"/>
+              <text x="197" y="306" fill="#ffffff" font-weight="700" font-size="18">San Diego</text>
+            </g>
+          </svg>
+          <div class="hero-map__chip"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> Serving all of San Diego County</div>
         </div>
       </div>
     </div>
@@ -281,7 +297,7 @@
         <span><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> Manufacturer-grade hardware</span>
         <span><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg> <span data-license data-license-on="Licensed &amp; insured crews" data-license-off="Experienced, vetted technicians">Experienced, vetted technicians</span></span>
         <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> Fast, on-time scheduling</span>
-        <span><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> Workmanship warranty</span>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> Free, no-obligation quotes</span>
       </div>
     </div>
   </section>
@@ -292,7 +308,7 @@
       <div class="section-head reveal">
         <span class="eyebrow eyebrow--center"><span class="dot"></span> Built for Business</span>
         <h2>Built for Commercial Spaces, Not One-Size-Fits-All Installations</h2>
-        <p>Every business has different risks, workflows and technical needs. We design each system around your layout, your team and your budget — without overselling equipment you don't need.</p>
+        <p>Every business has different risks, workflows and technical needs. We design each system around your layout, your team and your budget — without pushing equipment you don't need.</p>
       </div>
 
       <div class="cards commercial-grid">
@@ -399,7 +415,7 @@
         <li class="problem reveal"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg> Opening a new space without a clear low voltage plan</li>
         <li class="problem reveal"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg> Vendors who oversell equipment instead of solving the real issue</li>
       </ul>
-      <p class="problems-close reveal">ConnectWorks helps you choose the right system for your business — <strong>without unnecessary upsells.</strong></p>
+      <p class="problems-close reveal">ConnectWorks helps you choose the right system for your business — <strong>so you only pay for what your business actually needs.</strong></p>
       <div class="center-cta reveal"><a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Get an Honest Recommendation <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
     </div>
   </section>
@@ -437,9 +453,9 @@
       <ol class="process-grid">
         <li class="process-step reveal"><span class="process-step__num">01</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><h3>Consultation</h3><p>Tell us what you need, what problem you're trying to solve and what type of business you operate.</p></li>
         <li class="process-step reveal"><span class="process-step__num">02</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-clipboard"/></svg></span><h3>Site Assessment</h3><p>We review your layout, coverage needs, cabling routes, access points and technical requirements.</p></li>
-        <li class="process-step reveal"><span class="process-step__num">03</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg></span><h3>Honest Recommendation</h3><p>You get a clear proposal with the right solution for your space — no unnecessary upsells.</p></li>
+        <li class="process-step reveal"><span class="process-step__num">03</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg></span><h3>Honest Recommendation</h3><p>You get a clear, itemized proposal with the right solution for your space and budget.</p></li>
         <li class="process-step reveal"><span class="process-step__num">04</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><h3>Professional Installation</h3><p>We install cleanly, test the system and make sure everything is working properly.</p></li>
-        <li class="process-step reveal"><span class="process-step__num">05</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-headset"/></svg></span><h3>Support &amp; Warranty</h3><p>You receive support after installation and warranty coverage for labor and equipment.</p></li>
+        <li class="process-step reveal"><span class="process-step__num">05</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-headset"/></svg></span><h3>Support &amp; Follow-Up</h3><p>Responsive local support after installation — and we stand behind every install.</p></li>
       </ol>
     </div>
   </section>
@@ -528,7 +544,7 @@
     <div class="cta-banner__bg" aria-hidden="true"></div>
     <div class="container cta-banner__inner reveal">
       <h2>Ready to Upgrade Your Business Security, Network or Low Voltage System?</h2>
-      <p>Tell us about your commercial space and we'll help you choose the right solution — without overselling what you don't need.</p>
+      <p>Tell us about your commercial space and we'll help you choose the right solution — built around your space, your workflow and your budget.</p>
       <div class="cta-banner__actions">
         <a class="btn btn--white btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Commercial Quote</a>
         <a class="btn btn--outline-light btn--lg" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
@@ -552,8 +568,7 @@
         </ul>
 
         <ul class="trust-badges trust-badges--dark">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg> Honest Recommendations</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> 1-Year Warranty</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> Free, no-obligation quote</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> <span data-license>Professional Installations</span></li>
         </ul>
       </div>
