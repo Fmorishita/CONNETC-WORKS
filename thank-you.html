@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B3FA8" />
+  <title>Thank You | ConnectWorks Low Voltage Solutions</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .ty{min-height:100vh;display:grid;place-items:center;padding:40px 0;background:var(--dark-grad);color:#fff;text-align:center}
+    .ty__card{max-width:560px;background:rgba(255,255,255,.06);border:1px solid rgba(125,211,252,.2);border-radius:var(--radius-lg);padding:clamp(28px,6vw,48px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;gap:18px}
+    .ty__ic{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:var(--brand-grad);box-shadow:var(--shadow-blue)}
+    .ty__ic svg{width:38px;height:38px;stroke:#fff;fill:none;stroke-width:2.4}
+    .ty h1{color:#fff;font-size:clamp(1.6rem,5vw,2.3rem)}
+    .ty p{color:#C7D6EE;font-size:1.05rem}
+    .ty__actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
+    .ty__actions .btn{flex:1 1 auto;min-width:200px}
+  </style>
+</head>
+<body>
+  <main class="ty">
+    <div class="ty__card">
+      <span class="logo logo--light" style="justify-content:center">
+        <span class="logo__mark"><img class="logo__img" src="assets/logo-connectworks.png" alt="ConnectWorks Low Voltage Solutions logo" width="56" height="56" style="height:56px;width:56px" /></span>
+      </span>
+      <span class="ty__ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <h1>Thank you — request received.</h1>
+      <p>We'll review your commercial project and reach out shortly with honest next steps. Need to talk now?</p>
+      <div class="ty__actions">
+        <a class="btn btn--white btn--lg" href="tel:+16197861810">Call 619-786-1810</a>
+        <a class="btn btn--outline-light btn--lg" href="/">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Optional Meta Pixel conversion (only fires if you paste your Pixel ID). -->
+  <script>
+    var META_PIXEL_ID = ""; // paste your Pixel ID here if you use REDIRECT_TO_THANK_YOU
+    if (META_PIXEL_ID) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', META_PIXEL_ID); fbq('track','PageView'); fbq('track','Lead');
+    }
+  </script>
+</body>
+</html>
