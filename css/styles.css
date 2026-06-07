@@ -154,9 +154,9 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
 
 .logo{display:flex;align-items:center;gap:11px}
-.logo__mark{display:grid;place-items:center;color:#0A0E14;filter:drop-shadow(0 4px 10px rgba(11,87,208,.22))}
-.logo__mark svg{width:44px;height:44px}
-.logo--light .logo__mark{color:#e2e8f0}
+.logo__mark{display:grid;place-items:center}
+.logo__img{height:46px;width:46px;object-fit:contain;background:#fff;border-radius:11px;display:block;box-shadow:0 2px 8px rgba(13,30,60,.12)}
+.logo--light .logo__img{box-shadow:0 4px 14px rgba(0,0,0,.30)}
 .logo__text{display:flex;flex-direction:column;line-height:1}
 .logo__name{font-family:var(--ff-head);font-weight:800;font-size:1.28rem;letter-spacing:-.02em;color:var(--ink-900)}
 .logo__name strong{color:var(--blue-600);font-weight:800}
