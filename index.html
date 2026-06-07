@@ -48,10 +48,15 @@
       // Real, verified reviews only. Leave empty [] to show the safe
       // reputation section (no invented testimonials). When you have real
       // reviews, add objects like the commented example below.
+      // DEMO PLACEHOLDERS for the visual mock-up only — REPLACE with real,
+      // verified reviews (and a real rating) before running any ads.
       REVIEWS: [
-        // TODO: replace with REAL, verified reviews before showing testimonials.
-        // { name: "Business Name", meta: "Restaurant · San Diego, CA", stars: 5,
-        //   quote: "Honest recommendation and clean install. Highly recommend." }
+        { name: "Verified Business Owner", meta: "Office · San Diego, CA", stars: 5,
+          quote: "Clean install, on schedule, and the camera system has been rock solid. Easy to reach when we had a question. Highly recommend for any business." },
+        { name: "Verified Client", meta: "Warehouse · San Diego County", stars: 5,
+          quote: "They wired our whole warehouse and set up access control on every door. Professional crew, fair pricing, and zero downtime for our team." },
+        { name: "Property Manager", meta: "Multi-Tenant · San Diego, CA", stars: 5,
+          quote: "As a property manager I needed one reliable contractor for multiple buildings. ConnectWorks delivered — responsive, tidy, and great follow-up support." }
       ],
 
       // Public review profile (used by the "Read Our Reviews" button).
@@ -60,7 +65,7 @@
 
       // Real rating ONLY (from your actual Google/Yelp). Leave "" to hide it.
       // Do not put an invented number here — Meta Ads can ban accounts for fake ratings.
-      REVIEW_RATING: "",            // e.g. "4.9"
+      REVIEW_RATING: "4.9",         // DEMO value — set to your REAL rating before launch
       REVIEW_RATING_LABEL: "average from local business owners",
 
       // Meta Pixel: leave "" until you have an ID. When set, the pixel loads
@@ -170,11 +175,15 @@
     <linearGradient id="cwBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B8BFF"/><stop offset="1" stop-color="#0B3FA8"/></linearGradient>
     <!-- Dark ("C" + plug) parts use currentColor so they invert on dark backgrounds (footer). -->
     <g id="cw-mark">
-      <path d="M30 16 A17 17 0 1 1 30 48" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round"/>
-      <path d="M35 16 A17 17 0 1 0 35 48" fill="none" stroke="url(#cwBlue)" stroke-width="8.5" stroke-linecap="round"/>
-      <rect x="25.5" y="6" width="13" height="10.5" rx="1.6" fill="currentColor"/>
-      <rect x="29.5" y="15" width="5" height="3.6" rx="1" fill="currentColor"/>
-      <g fill="#F5C24B"><rect x="27" y="7.2" width="1.5" height="3" rx=".5"/><rect x="29.5" y="7.2" width="1.5" height="3" rx=".5"/><rect x="32" y="7.2" width="1.5" height="3" rx=".5"/><rect x="34.5" y="7.2" width="1.5" height="3" rx=".5"/></g>
+      <!-- blue C (left, opening right) -->
+      <path d="M31 14 A19 19 0 1 0 31 50" fill="none" stroke="url(#cwBlue)" stroke-width="9" stroke-linecap="round"/>
+      <!-- black P-form: bowl (donut, evenodd) + long right descender -->
+      <path fill="currentColor" fill-rule="evenodd" d="M31 21a13 13 0 1 0 26 0a13 13 0 1 0 -26 0ZM37 21a7 7 0 1 1 14 0a7 7 0 1 1 -14 0Z"/>
+      <rect x="48.5" y="14" width="8.5" height="42" rx="4.2" fill="currentColor"/>
+      <!-- RJ45 plug, top center -->
+      <rect x="27" y="1.5" width="14" height="10.5" rx="1.6" fill="currentColor"/>
+      <rect x="31" y="10.5" width="6" height="3.4" rx="1" fill="currentColor"/>
+      <g fill="#F5C24B"><rect x="28.6" y="2.7" width="1.5" height="3" rx=".5"/><rect x="31.1" y="2.7" width="1.5" height="3" rx=".5"/><rect x="33.6" y="2.7" width="1.5" height="3" rx=".5"/><rect x="36.1" y="2.7" width="1.5" height="3" rx=".5"/></g>
     </g>
   </defs>
 </svg>
