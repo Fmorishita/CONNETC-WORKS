@@ -1,104 +1,73 @@
 # ConnectWorks Low Voltage Solutions — Website
 
-A modern, fast, conversion-focused marketing site for **ConnectWorks Low Voltage Solutions**, a commercial low voltage & security company serving **San Diego County**.
+Modern, conversion-focused marketing site for **ConnectWorks Low Voltage Solutions**, a **commercial** low voltage & security company serving **San Diego County**.
 
-Built as a lightweight static site (HTML + CSS + vanilla JS) with a single **Vercel serverless function** that saves quote requests into **Supabase**. Loads fast — which matters for converting **Meta / Google Ads** traffic into calls, quote forms, and consultations.
+Lightweight static site (HTML + CSS + vanilla JS) with one **Vercel serverless function** that saves quote requests into **Supabase**. Fast-loading and ready for a future **Meta Ads** stage (UTM capture, CTA tracking, pixel scaffolding, thank-you page).
 
 ---
 
 ## ✨ Highlights
 
-- **Mobile-first** & fully responsive (mobile → desktop).
-- **Conversion-optimized:** sticky header CTA, sticky bottom call/quote bar on mobile, click-to-call everywhere, a validated quote form, and CTAs at the top, middle, and bottom.
-- **Lead capture → Supabase:** the form posts to `/api/lead`, which stores each lead in your Supabase database (service-role key stays server-side, never in the browser).
-- **Premium, on-brand design** (intense blue / navy-black / white / gray) — clean, technical, corporate.
-- **Zero external image dependencies:** all graphics are custom SVG (logo, icons, hero scene, gallery) so nothing ever appears broken. Swap in real photos when ready.
-- **SEO-ready:** meta description, canonical, Open Graph + Twitter cards, `LocalBusiness` JSON-LD, `robots.txt`, `sitemap.xml`.
-- **Accessible:** skip link, focus styles, ARIA labels, `prefers-reduced-motion`, good contrast.
+- **Commercial-first positioning & copy** — built to attract restaurants, coffee shops, warehouses, auto shops, offices, retail, buildouts and property managers; gently filters tiny residential jobs.
+- **Honesty-led messaging** — "honest recommendations, no unnecessary upsells", 10+ years experience, 1-year labor & equipment warranty.
+- **Conversion-optimized** — sticky header CTA, sticky mobile call/quote bar, click-to-call, CTAs throughout, qualified lead form.
+- **Lead capture → Supabase** with UTM tracking; thank-you state + optional `/thank-you.html`.
+- **No invented claims** — no "24/7 monitoring", "500+ devices", "4.9 rating", or fake testimonials. Reviews render only when real ones are added.
+- **Editable config block** (see below) for licenses, reviews, Meta Pixel.
+- **SEO**: San-Diego-local title/description/keywords, OpenGraph + Twitter cards, `ProfessionalService` JSON-LD, `robots.txt`, `sitemap.xml`.
+- **Brand logo** recreated as crisp SVG (interlocking blue/black "C" + RJ45 plug); themes for light header / dark footer.
 
-## 🗂 Project structure
+## 🗂 Structure
 
 ```
-.
-├── index.html              # The full one-page site
-├── css/styles.css          # All styling (design tokens + responsive)
-├── js/main.js              # Nav, smooth scroll, reveal, form → /api/lead
-├── api/lead.js             # Vercel serverless function → inserts into Supabase
-├── supabase/schema.sql     # Run once in Supabase to create the `leads` table
-├── assets/
-│   ├── favicon.svg · logo.svg · og-image.svg
-│   └── gallery/            # Project showcase tiles (replace with real photos)
-├── package.json            # Declares @supabase/supabase-js for the function
-├── vercel.json             # Routing + security headers + asset caching
-├── .env.example            # Names of the env vars Vercel needs
-├── robots.txt · sitemap.xml
-└── README.md
+index.html               # one-page site (config block in <head>)
+thank-you.html           # optional ad-conversion landing (redirect target)
+css/styles.css           # styles (tokens + responsive)
+js/main.js               # nav, reveal, UTM, pixel, reviews, license, form
+api/lead.js              # Vercel function → Supabase (resilient insert)
+supabase/schema.sql            # full table (new projects)
+supabase/migration_commercial.sql  # ADDs new columns to an existing table
+assets/ (favicon, og-image, gallery/*)
+vercel.json · package.json · .env.example · robots.txt · sitemap.xml
 ```
 
 ---
 
-## 🚀 Deploy on Vercel + Supabase (≈ 5 minutes)
+## ⚙️ Editable variables (in `index.html` → `window.CONNECTWORKS_CONFIG`)
 
-> The repo is already on GitHub, so the fastest path is to import it into Vercel and add two environment variables.
+| Variable | What it does |
+|---|---|
+| `HAS_LICENSES` | `false` shows "Professional Low Voltage Installations" / "Licensing info upon request". Set `true` (with `LICENSE_TEXT`) **only when Omar provides license/insurance numbers** → shows "Licensed & Insured". |
+| `REVIEWS` | Empty `[]` shows the safe reputation block (no fake reviews). Add real, verified `{name, meta, stars, quote}` objects to render testimonial cards. |
+| `YELP_URL` / `GOOGLE_REVIEWS_URL` | When set, the "Read Our Reviews" button links to your public profile. |
+| `META_PIXEL_ID` | Leave `""` for now. When set, loads Meta Pixel + fires `PageView` and a `Lead` event on submit. |
+| `REDIRECT_TO_THANK_YOU` | `false` = inline thank-you message (default). `true` = redirect to `/thank-you.html` after submit. |
 
-### Fastest: one-click button
-After you've done **step 1** below (created the Supabase table and copied your two keys), click this button. Vercel will ask you to log in, then prompt for `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` — paste them and click **Deploy**.
+## 🚧 TODO before/at go-live
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FFmorishita%2FCONNETC-WORKS&env=SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY&envDescription=Supabase%20credentials%20used%20by%20the%20lead-capture%20function&envLink=https%3A%2F%2Fgithub.com%2FFmorishita%2FCONNETC-WORKS%2Fblob%2Fmain%2F.env.example&project-name=connectworks&repository-name=connectworks)
-
-> The button deploys the **`main`** branch, so merge this PR first (or use the manual steps below to deploy a preview from the feature branch).
-
-### 1) Create the Supabase database
-1. Go to **https://supabase.com** → create a project (free tier is fine).
-2. Open **SQL Editor → New query**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql), and click **Run**. This creates the private `leads` table.
-3. Go to **Project Settings → API** and copy two values:
-   - **Project URL** → this is `SUPABASE_URL`
-   - **`service_role` secret** (under *Project API keys*) → this is `SUPABASE_SERVICE_ROLE_KEY`
-   - ⚠️ The `service_role` key is a secret. Only paste it into Vercel env vars — never into the website code or the browser.
-
-### 2) Import the repo into Vercel
-1. Go to **https://vercel.com** → **Add New… → Project**.
-2. **Import** the GitHub repo `Fmorishita/connetc-works`.
-3. Framework preset: **Other** (no build step needed). Leave defaults.
-4. Before deploying, open **Environment Variables** and add:
-
-   | Name | Value |
-   |------|-------|
-   | `SUPABASE_URL` | your Project URL |
-   | `SUPABASE_SERVICE_ROLE_KEY` | your `service_role` secret |
-
-5. Click **Deploy**. Vercel installs `@supabase/supabase-js`, publishes the static site, and turns `api/lead.js` into a live endpoint.
-6. You get a URL like `https://connetc-works.vercel.app` — that's your live site. 🎉
-
-### 3) Test it
-Open the site, submit the quote form, then check **Supabase → Table Editor → `leads`** — your test submission should appear. You can also add a custom domain (e.g. `connectworks-sd.com`) in **Vercel → Settings → Domains**.
-
-> **Tip — deploy from the branch first:** during review you can deploy the `claude/charming-ptolemy-LQiZc` branch to get a preview URL, then point production at `main` after merging the PR.
-
-### Optional: deploy from the CLI
-```bash
-npm i -g vercel
-vercel login
-vercel link
-vercel env add SUPABASE_URL
-vercel env add SUPABASE_SERVICE_ROLE_KEY
-vercel --prod
-# local dev with functions: `vercel dev` (put the vars in a local .env first)
-```
+- **Logo:** `assets/favicon.svg` is a faithful **SVG recreation**. For pixel-perfect fidelity, replace it (and `assets/og-image.svg`) with Omar's official file.
+- **Project photos:** replace placeholders in `assets/gallery/` with real photos (Security Cameras · Structured Cabling · Access Control · Intercom · Network & Wireless · Commercial AV · Service Vehicle), then update `src`/`alt` in the Projects section.
+- **Reviews:** add real ones to `REVIEWS` (and a `YELP_URL`).
+- **Licenses:** flip `HAS_LICENSES` when numbers are ready.
+- **Social links:** replace the placeholder Facebook/LinkedIn/Instagram URLs in the footer.
 
 ---
 
-## 🎨 Customize
+## 🚀 Deploy (Vercel + Supabase)
 
-- **Phone / email / address:** update the `tel:`/`mailto:` links and the JSON-LD block in `index.html` (currently **619-786-1810**, **info@connectworks-sd.com**, San Diego County).
-- **Social links:** replace the placeholder URLs in the footer and the JSON-LD `sameAs`.
-- **Real photos:** drop images into `assets/gallery/` and update the `<img src>` paths in the Projects section. The hero visual and service cards can also be swapped for photos.
-- **Reviews:** replace the placeholder testimonials with your verified Google/Yelp quotes.
-- **Colors:** all brand colors are CSS variables at the top of `css/styles.css`.
-- **Domain:** the site references **www.connectworks-sd.com** (canonical, OG image, sitemap) — update those absolute URLs if production differs.
+Already connected to Vercel? Every branch/PR gets an automatic **preview URL** (check the PR's Vercel comment or your Vercel dashboard). To promote changes, merge to `main`.
 
-## 🔒 Notes
+**Database — run the migration (one time):** because the `leads` table already exists, open **Supabase → SQL Editor** and run [`supabase/migration_commercial.sql`](supabase/migration_commercial.sql). It safely **adds** the new columns (`business_type`, `project_type`, `timeline`, `budget`, `utm_*`). *(For a brand-new project, run `supabase/schema.sql` instead.)*
 
-- The `leads` table has Row Level Security enabled with **no public policies**, so only the serverless function (using the service-role key) can read/write it — your leads stay private.
-- Secrets live only in Vercel env vars; `.env*` is git-ignored. Never commit real keys.
-- Want email/SMS notifications on each lead? Add a Supabase **Database Webhook** or an email step inside `api/lead.js`.
+> Until the migration runs, the form still works — `api/lead.js` automatically falls back to saving the core fields so no lead is lost.
+
+**Env vars (already set in Vercel):** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (service-role secret stays server-side only).
+
+**Test:** submit the form → see the inline thank-you → confirm a new row in **Supabase → Table Editor → `leads`**.
+
+## 🔮 Meta Ads readiness (no ads sold/served here)
+
+- UTM params (`utm_source/medium/campaign/content/term`) are auto-captured from the URL, persisted, sent with each lead, and stored in Supabase.
+- All primary buttons carry `data-cta` (`request-commercial-quote`, `call-now`) and emit `dataLayer` events + pixel events when a pixel is configured.
+- Meta Pixel is scaffolded but **off** until you set `META_PIXEL_ID`; it fires `Lead` on successful submit.
+- `/thank-you.html` is available as a URL-based conversion destination.

@@ -45,7 +45,7 @@
   --radius-pill:999px;
 
   --maxw:1180px;
-  --pad:clamp(18px,5vw,28px);
+  --pad:clamp(22px,5.4vw,34px);
 
   --ff-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --ff-head:'Sora','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -154,8 +154,9 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
 
 .logo{display:flex;align-items:center;gap:11px}
-.logo__mark{display:grid;place-items:center;filter:drop-shadow(0 6px 14px rgba(11,87,208,.3))}
-.logo__mark svg{width:40px;height:40px}
+.logo__mark{display:grid;place-items:center;color:#0A0E14;filter:drop-shadow(0 4px 10px rgba(11,87,208,.22))}
+.logo__mark svg{width:44px;height:44px}
+.logo--light .logo__mark{color:#e2e8f0}
 .logo__text{display:flex;flex-direction:column;line-height:1}
 .logo__name{font-family:var(--ff-head);font-weight:800;font-size:1.28rem;letter-spacing:-.02em;color:var(--ink-900)}
 .logo__name strong{color:var(--blue-600);font-weight:800}
@@ -204,7 +205,7 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 
 .hero__copy{display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:640px}
 .hero .eyebrow{background:rgba(56,189,248,.12);color:var(--cyan-300);border-color:rgba(125,211,252,.25)}
-.hero h1{font-size:clamp(2.05rem,6.4vw,3.5rem);color:#fff;letter-spacing:-.03em}
+.hero h1{font-size:clamp(1.85rem,6vw,3.4rem);color:#fff;letter-spacing:-.03em}
 .hero__sub{font-size:clamp(1.02rem,2.4vw,1.2rem);color:#C7D6EE;max-width:54ch}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;width:100%}
 .hero__cta .btn{flex:1 1 auto;min-width:180px}
@@ -241,8 +242,8 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
   padding:16px;text-align:center;backdrop-filter:blur(6px);
 }
 .hero-stat-card div{display:flex;flex-direction:column;gap:2px}
-.hero-stat-card strong{font-family:var(--ff-head);font-size:1.3rem;color:#fff}
-.hero-stat-card span{font-size:.72rem;color:var(--cyan-300);letter-spacing:.02em}
+.hero-stat-card strong{font-family:var(--ff-head);font-size:1.12rem;color:#fff}
+.hero-stat-card span{font-size:.68rem;color:var(--cyan-300);letter-spacing:.01em;line-height:1.3}
 
 /* =========================================================
    ASSURANCE STRIP
@@ -322,7 +323,7 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 /* =========================================================
    PROCESS
    ========================================================= */
-.process-grid{display:grid;gap:20px;counter-reset:step}
+.process-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));counter-reset:step}
 .process-step{
   position:relative;background:rgba(255,255,255,.05);
   border:1px solid rgba(125,211,252,.18);border-radius:var(--radius-lg);
@@ -489,7 +490,6 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 
 @media (min-width:768px){
   .why-list{grid-template-columns:1fr 1fr}
-  .process-grid{grid-template-columns:repeat(2,1fr)}
   .gallery-grid{grid-template-columns:repeat(3,1fr)}
   .gallery-item--lg{grid-column:span 1}
   .reviews-grid{grid-template-columns:repeat(3,1fr)}
@@ -509,7 +509,6 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .why-grid{grid-template-columns:.85fr 1.15fr;align-items:start}
   .why-intro{position:sticky;top:96px}
   .industries-grid{grid-template-columns:repeat(3,1fr)}
-  .process-grid{grid-template-columns:repeat(4,1fr)}
   .contact-grid{grid-template-columns:1fr 1.1fr;align-items:start}
   .contact-info{position:sticky;top:96px}
   .footer-grid{grid-template-columns:1.4fr 1fr 1fr 1.2fr}
@@ -520,14 +519,54 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .industries-grid{grid-template-columns:repeat(3,1fr)}
 }
 
-/* connect process steps with a line on desktop */
+/* =========================================================
+   NEW SECTIONS (commercial revamp)
+   ========================================================= */
+/* Built for commercial */
+.commercial-grid{grid-template-columns:1fr}
+.commercial-card{padding:26px 22px;display:flex;flex-direction:column;gap:12px}
+.commercial-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(11,87,208,.25)}
+.commercial-card__ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--brand-grad-soft);color:var(--blue-600);border:1px solid rgba(11,87,208,.14)}
+.commercial-card__ic .ic{width:27px;height:27px;stroke-width:1.7}
+.commercial-card h3{font-size:1.12rem}
+.commercial-card p{color:var(--gray-500);font-size:.95rem}
+
+/* Problems we solve */
+.problems-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.problem{display:flex;align-items:flex-start;gap:13px;background:#fff;border:1px solid var(--gray-150);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);font-weight:500;color:var(--ink-800);font-size:.98rem;transition:transform .18s ease,box-shadow .18s ease}
+.problem:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.problem .ic{flex:none;width:22px;height:22px;color:#E8833A;stroke-width:1.9;margin-top:1px}
+.problems-close{text-align:center;font-size:clamp(1.05rem,2.5vw,1.25rem);color:var(--ink-700);max-width:60ch;margin:26px auto 0}
+.problems-close strong{color:var(--blue-600)}
+.center-cta{display:flex;justify-content:center;margin-top:24px}
+
+/* Reputation block (safe, no fake reviews) */
+.reputation{max-width:880px;margin:0 auto;background:#fff;border:1px solid var(--gray-150);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:clamp(24px,4vw,38px);display:flex;flex-direction:column;gap:24px}
+.reputation__pillars{display:grid;grid-template-columns:1fr;gap:16px}
+.reputation__pillars div{display:flex;align-items:center;gap:12px;font-weight:600;color:var(--ink-800)}
+.reputation__pillars .ic{flex:none;width:30px;height:30px;color:var(--blue-600);stroke-width:1.8}
+.reputation__actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.reputation__actions .btn{flex:1 1 auto;min-width:220px;max-width:340px}
+
+.industries-also{text-align:center;color:var(--gray-500);font-size:.95rem;margin-top:20px}
+
+/* Inline thank-you state */
+.form-thanks{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:18px 6px 8px}
+.form-thanks[hidden]{display:none}
+.form-thanks__ic{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:var(--brand-grad);color:#fff;box-shadow:var(--shadow-blue)}
+.form-thanks__ic .ic{width:34px;height:34px;stroke-width:2.4}
+.form-thanks h3{font-size:1.3rem}
+.form-thanks p{color:var(--gray-500)}
+.opt{color:var(--gray-400);font-weight:400;font-size:.85em}
+
+@media (min-width:560px){
+  .commercial-grid{grid-template-columns:repeat(2,1fr)}
+  .problems-grid{grid-template-columns:1fr 1fr}
+  .reputation__pillars{grid-template-columns:repeat(3,1fr);text-align:center}
+  .reputation__pillars div{flex-direction:column;gap:8px}
+}
 @media (min-width:960px){
-  .process-grid{position:relative}
-  .process-step::before{
-    content:"";position:absolute;top:46px;right:-10px;width:20px;height:2px;
-    background:linear-gradient(90deg,rgba(125,211,252,.5),transparent);
-  }
-  .process-step:last-child::before{display:none}
+  .commercial-grid{grid-template-columns:repeat(4,1fr)}
 }
 
 /* =========================================================

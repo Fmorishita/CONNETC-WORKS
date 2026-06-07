@@ -1,22 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ConnectWorks">
+  <!-- TODO: This is a faithful SVG recreation of the ConnectWorks logo.
+       For pixel-perfect fidelity, replace this file with Omar's official logo
+       (keep the 64x64 viewBox or update references). -->
   <defs>
-    <linearGradient id="cwfav" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0B57D0"/>
-      <stop offset=".55" stop-color="#1A73E8"/>
-      <stop offset="1" stop-color="#38BDF8"/>
+    <linearGradient id="cwBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B8BFF"/><stop offset="1" stop-color="#0B3FA8"/>
+    </linearGradient>
+    <linearGradient id="cwDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#33404F"/><stop offset="1" stop-color="#0A0E14"/>
+    </linearGradient>
+    <linearGradient id="cwBadge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E1B33"/><stop offset="1" stop-color="#0A1326"/>
     </linearGradient>
   </defs>
-  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#cwfav)"/>
-  <g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M32 31 L32 18"/>
-    <path d="M32 31 L18 44"/>
-    <path d="M32 31 L46 44"/>
-    <path d="M26 16a8.5 8.5 0 0 1 12 0" opacity=".7"/>
-  </g>
-  <g fill="#fff">
-    <circle cx="32" cy="31" r="4.6"/>
-    <circle cx="32" cy="17" r="3.4"/>
-    <circle cx="18" cy="45" r="3.4"/>
-    <circle cx="46" cy="45" r="3.4"/>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#cwBadge)"/>
+  <!-- black C (right, opening left) -->
+  <path d="M30 16 A17 17 0 1 1 30 48" fill="none" stroke="url(#cwDark)" stroke-width="8.5" stroke-linecap="round"/>
+  <path d="M30 16 A17 17 0 1 1 30 48" fill="none" stroke="#8aa0c0" stroke-opacity=".25" stroke-width="2" stroke-linecap="round"/>
+  <!-- blue C (left, opening right) -->
+  <path d="M35 16 A17 17 0 1 0 35 48" fill="none" stroke="url(#cwBlue)" stroke-width="8.5" stroke-linecap="round"/>
+  <!-- RJ45 plug, top center -->
+  <g>
+    <rect x="25.5" y="6" width="13" height="10.5" rx="1.6" fill="url(#cwDark)"/>
+    <rect x="29.5" y="15" width="5" height="3.6" rx="1" fill="url(#cwDark)"/>
+    <g fill="#F5C24B"><rect x="27" y="7.2" width="1.5" height="3" rx=".5"/><rect x="29.5" y="7.2" width="1.5" height="3" rx=".5"/><rect x="32" y="7.2" width="1.5" height="3" rx=".5"/><rect x="34.5" y="7.2" width="1.5" height="3" rx=".5"/></g>
   </g>
 </svg>
