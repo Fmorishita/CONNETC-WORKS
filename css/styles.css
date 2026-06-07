@@ -269,8 +269,9 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 .service-card{overflow:hidden;display:flex;flex-direction:column}
 .service-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(11,87,208,.25)}
 .service-card__media{
-  height:120px;display:grid;place-items:center;position:relative;overflow:hidden;
+  height:150px;display:grid;place-items:center;position:relative;overflow:hidden;
 }
+.service-card__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
 .service-card__media::after{
   content:"";position:absolute;inset:0;opacity:.5;
   background-image:radial-gradient(rgba(255,255,255,.18) 1.1px,transparent 1.2px);background-size:16px 16px;
