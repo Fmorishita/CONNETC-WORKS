@@ -18,16 +18,13 @@
   (function applyLicense() {
     var licensed = CFG.HAS_LICENSES === true;
     $$('[data-license]').forEach(function (el) {
-      if (licensed) {
-        el.textContent = CFG.LICENSE_TEXT || 'Licensed & Insured';
-      } else if (CFG.NO_LICENSE_TEXT) {
-        // keep any richer footer wording, but ensure non-claiming default elsewhere
-        if (el.classList.contains('footer-license')) {
-          el.textContent = (CFG.NO_LICENSE_TEXT) + ' · Licensing information available upon request';
-        } else {
-          el.textContent = CFG.NO_LICENSE_TEXT;
-        }
+      var on = el.dataset.licenseOn || CFG.LICENSE_TEXT || 'Licensed & Insured';
+      var off = el.dataset.licenseOff || CFG.NO_LICENSE_TEXT || 'Professional Low Voltage Installations';
+      // Footer gets a slightly richer non-claiming line by default
+      if (!licensed && el.classList.contains('footer-license') && !el.dataset.licenseOff) {
+        off = (CFG.NO_LICENSE_TEXT || 'Professional Low Voltage Installations') + ' · Licensing information available upon request';
       }
+      el.textContent = licensed ? on : off;
     });
   })();
 
@@ -36,6 +33,18 @@
     var grid = $('#reviewsGrid');
     var reputation = $('#reputationBlock');
     var reviews = Array.isArray(CFG.REVIEWS) ? CFG.REVIEWS : [];
+
+    // Rating summary (only if a REAL rating is configured)
+    var summary = $('#ratingSummary');
+    if (summary && CFG.REVIEW_RATING) {
+      var rating = parseFloat(CFG.REVIEW_RATING) || 0;
+      var filled = Math.max(1, Math.min(5, Math.round(rating)));
+      var sEl = $('#ratingStars');
+      if (sEl) { var s = ''; for (var k = 0; k < filled; k++) s += '<svg class="ic"><use href="#i-star"/></svg>'; sEl.innerHTML = s; }
+      var vEl = $('#ratingValue'); if (vEl) vEl.textContent = CFG.REVIEW_RATING + ' / 5';
+      var lEl = $('#ratingLabel'); if (lEl) lEl.textContent = CFG.REVIEW_RATING_LABEL || '';
+      summary.hidden = false;
+    }
 
     // Wire the reviews link if a public profile URL is provided
     var link = $('#reviewsLink');

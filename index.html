@@ -58,6 +58,11 @@
       YELP_URL: "",      // e.g. "https://www.yelp.com/biz/your-page"
       GOOGLE_REVIEWS_URL: "",
 
+      // Real rating ONLY (from your actual Google/Yelp). Leave "" to hide it.
+      // Do not put an invented number here — Meta Ads can ban accounts for fake ratings.
+      REVIEW_RATING: "",            // e.g. "4.9"
+      REVIEW_RATING_LABEL: "average from local business owners",
+
       // Meta Pixel: leave "" until you have an ID. When set, the pixel loads
       // and fires PageView + a "Lead" event on successful form submit.
       META_PIXEL_ID: "",
@@ -288,12 +293,12 @@
   <!-- ============ ASSURANCE STRIP ============ -->
   <section class="assurance">
     <div class="container assurance__inner">
-      <span class="assurance__lead">Why business owners call ConnectWorks</span>
+      <span class="assurance__lead">Trusted for commercial-grade installs</span>
       <div class="assurance__items">
-        <span><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg> Honest recommendations — no unnecessary upsells</span>
-        <span><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> 1-year labor &amp; equipment warranty</span>
-        <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> 10+ years of field experience</span>
-        <span><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> <span data-license>Professional Low Voltage Installations</span></span>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> Manufacturer-grade hardware</span>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg> <span data-license data-license-on="Licensed &amp; insured crews" data-license-off="Experienced, vetted technicians">Experienced, vetted technicians</span></span>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> Fast, on-time scheduling</span>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> Workmanship warranty</span>
       </div>
     </div>
   </section>
@@ -484,12 +489,17 @@
   <section class="section section--alt" id="reviews">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow eyebrow--center"><span class="dot"></span> Reputation</span>
-        <h2>Trusted by Local San Diego Businesses</h2>
+        <span class="eyebrow eyebrow--center"><span class="dot"></span> Reviews</span>
+        <h2>Trusted by Businesses Across San Diego County</h2>
         <p>ConnectWorks has earned trust through honest recommendations, clean work and reliable support.</p>
+        <!-- Rating summary shows ONLY if CONFIG.REVIEW_RATING is set to a real number. -->
+        <div class="rating-summary" id="ratingSummary" hidden>
+          <span class="stars" id="ratingStars" aria-hidden="true"></span>
+          <span class="rating-summary__text"><strong id="ratingValue"></strong> <span id="ratingLabel"></span></span>
+        </div>
       </div>
 
-      <!-- Reviews render here ONLY if real, verified reviews exist in CONFIG.REVIEWS.
+      <!-- Testimonial cards render here ONLY if real reviews exist in CONFIG.REVIEWS.
            Otherwise the safe reputation block below is shown (no invented testimonials). -->
       <div class="cards reviews-grid" id="reviewsGrid" hidden></div>
 
