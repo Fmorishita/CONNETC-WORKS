@@ -41,6 +41,13 @@ Built as a lightweight static site (HTML + CSS + vanilla JS) with a single **Ver
 
 > The repo is already on GitHub, so the fastest path is to import it into Vercel and add two environment variables.
 
+### Fastest: one-click button
+After you've done **step 1** below (created the Supabase table and copied your two keys), click this button. Vercel will ask you to log in, then prompt for `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` — paste them and click **Deploy**.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FFmorishita%2FCONNETC-WORKS&env=SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY&envDescription=Supabase%20credentials%20used%20by%20the%20lead-capture%20function&envLink=https%3A%2F%2Fgithub.com%2FFmorishita%2FCONNETC-WORKS%2Fblob%2Fmain%2F.env.example&project-name=connectworks&repository-name=connectworks)
+
+> The button deploys the **`main`** branch, so merge this PR first (or use the manual steps below to deploy a preview from the feature branch).
+
 ### 1) Create the Supabase database
 1. Go to **https://supabase.com** → create a project (free tier is fine).
 2. Open **SQL Editor → New query**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql), and click **Run**. This creates the private `leads` table.
