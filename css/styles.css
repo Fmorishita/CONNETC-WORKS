@@ -562,6 +562,23 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .hm-border{animation:hmDash 18s linear infinite}
 @keyframes hmDash{to{stroke-dashoffset:-280}}
 
+/* Hero service-area map (real image, animated) */
+.hero-map-img{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid rgba(125,211,252,.18);background:#0a1326}
+.hero-map-img img{display:block;width:100%;height:auto;animation:mapBreathe 11s ease-in-out infinite}
+.hero-map-img::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 32%,rgba(125,211,252,.10) 48%,transparent 64%);transform:translateX(-130%);animation:mapSheen 7.5s ease-in-out infinite}
+@keyframes mapBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes mapSheen{0%{transform:translateX(-130%)}60%,100%{transform:translateX(130%)}}
+
+/* Licensing & Standards — compact band (distinct from card sections) */
+.licensing-band{padding:clamp(26px,4.5vw,40px) 0;background:var(--gray-50)}
+.licensing-band__inner{background:#fff;border:1px solid var(--gray-150);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:clamp(20px,3.6vw,30px);display:grid;gap:20px}
+.licensing-band__head h3{font-size:clamp(1.15rem,2.4vw,1.45rem);margin:10px 0 8px}
+.licensing-band__head p{color:var(--gray-500);font-size:.95rem;max-width:62ch}
+.cred-pills{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+.cred-pills li{display:inline-flex;align-items:center;gap:8px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-pill);padding:9px 14px;font-size:.86rem;font-weight:600;color:var(--ink-800)}
+.cred-pills .ic{width:18px;height:18px;color:var(--blue-600);flex:none;stroke-width:1.9}
+@media (min-width:880px){.licensing-band__inner{grid-template-columns:1.05fr 1fr;align-items:center;gap:34px}}
+
 /* =========================================================
    NEW SECTIONS (commercial revamp)
    ========================================================= */
