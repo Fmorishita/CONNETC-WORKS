@@ -204,7 +204,7 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
   -webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 40%,transparent 80%);
   mask-image:radial-gradient(ellipse at 50% 30%,#000 40%,transparent 80%);
 }
-.hero__grid{position:relative;display:grid;gap:clamp(34px,5vw,56px);padding:clamp(48px,8vw,84px) 0 clamp(56px,8vw,90px)}
+.hero__grid{position:relative;display:grid;gap:clamp(34px,5vw,56px);padding-block:clamp(48px,8vw,84px) clamp(56px,8vw,90px)}
 
 .hero__copy{display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:640px}
 .hero .eyebrow{background:rgba(56,189,248,.12);color:var(--cyan-300);border-color:rgba(125,211,252,.25)}
@@ -269,8 +269,9 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
 .service-card{overflow:hidden;display:flex;flex-direction:column}
 .service-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(11,87,208,.25)}
 .service-card__media{
-  height:120px;display:grid;place-items:center;position:relative;overflow:hidden;
+  height:150px;display:grid;place-items:center;position:relative;overflow:hidden;
 }
+.service-card__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
 .service-card__media::after{
   content:"";position:absolute;inset:0;opacity:.5;
   background-image:radial-gradient(rgba(255,255,255,.18) 1.1px,transparent 1.2px);background-size:16px 16px;
@@ -385,7 +386,7 @@ h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.12;letter-spacing:-.02em;co
   radial-gradient(700px 400px at 90% 0%,rgba(56,189,248,.4),transparent 55%),
   var(--brand-grad);}
 .cta-banner__bg::after{content:"";position:absolute;inset:0;opacity:.4;background-image:radial-gradient(rgba(255,255,255,.22) 1px,transparent 1.4px);background-size:22px 22px}
-.cta-banner__inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;padding:clamp(48px,7vw,80px) 0}
+.cta-banner__inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;padding-block:clamp(48px,7vw,80px)}
 .cta-banner h2{color:#fff;font-size:clamp(1.6rem,4vw,2.5rem);max-width:18ch}
 .cta-banner p{color:rgba(255,255,255,.92);font-size:1.1rem;max-width:50ch}
 .cta-banner__actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
@@ -556,6 +557,28 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .hero-map__svg{width:100%;height:auto;display:block}
 .hero-map__chip{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(8,17,35,.74);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(125,211,252,.25);color:#fff;padding:9px 14px;border-radius:var(--radius-pill);font-size:.82rem;font-weight:600;box-shadow:var(--shadow-md)}
 .hero-map__chip .ic{width:16px;height:16px;color:var(--cyan-400)}
+/* map animations */
+.hm-pin-ring{transform-origin:200px 410px;animation:hmPing 2.4s ease-out infinite}
+@keyframes hmPing{0%{transform:scale(.5);opacity:.6}70%{transform:scale(2.4);opacity:0}100%{opacity:0}}
+.hm-border{animation:hmDash 18s linear infinite}
+@keyframes hmDash{to{stroke-dashoffset:-280}}
+
+/* Hero service-area map (real image, animated) */
+.hero-map-img{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid rgba(125,211,252,.18);background:#0a1326}
+.hero-map-img img{display:block;width:100%;height:auto;animation:mapBreathe 11s ease-in-out infinite}
+.hero-map-img::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 32%,rgba(125,211,252,.10) 48%,transparent 64%);transform:translateX(-130%);animation:mapSheen 7.5s ease-in-out infinite}
+@keyframes mapBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes mapSheen{0%{transform:translateX(-130%)}60%,100%{transform:translateX(130%)}}
+
+/* Licensing & Standards — compact band (distinct from card sections) */
+.licensing-band{padding-block:clamp(26px,4.5vw,40px);padding-inline:var(--pad);background:var(--gray-50)}
+.licensing-band__inner{background:#fff;border:1px solid var(--gray-150);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:clamp(20px,3.6vw,30px);display:grid;gap:20px}
+.licensing-band__head h3{font-size:clamp(1.15rem,2.4vw,1.45rem);margin:10px 0 8px}
+.licensing-band__head p{color:var(--gray-500);font-size:.95rem;max-width:62ch}
+.cred-pills{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+.cred-pills li{display:inline-flex;align-items:center;gap:8px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-pill);padding:9px 14px;font-size:.86rem;font-weight:600;color:var(--ink-800)}
+.cred-pills .ic{width:18px;height:18px;color:var(--blue-600);flex:none;stroke-width:1.9}
+@media (min-width:880px){.licensing-band__inner{grid-template-columns:1.05fr 1fr;align-items:center;gap:34px}}
 
 /* =========================================================
    NEW SECTIONS (commercial revamp)

@@ -196,7 +196,7 @@
         <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
         <span>619-786-1810</span>
       </a>
-      <a class="btn btn--primary btn--sm" href="#contact" data-cta="request-commercial-quote">Request a Quote</a>
+      <a class="btn btn--primary btn--sm" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
     </div>
 
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
@@ -215,7 +215,7 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="mobile-nav__cta">
-      <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote">Request a Commercial Quote</a>
+      <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
       <a class="btn btn--ghost btn--block" href="tel:+16197861810" data-cta="call-now">
         <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810
       </a>
@@ -234,7 +234,7 @@
         <h1>Commercial Low Voltage &amp; Security Solutions for <span class="grad">San Diego Businesses</span></h1>
         <p class="hero__sub">From security cameras and access control to structured cabling, business Wi-Fi, intercom and commercial audio/video, ConnectWorks designs and installs reliable systems built around your space, budget and operations.</p>
         <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Commercial Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="btn btn--outline btn--lg" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
         </div>
         <ul class="trust-badges">
@@ -246,44 +246,8 @@
       </div>
 
       <div class="hero__visual reveal">
-        <div class="hero-map" role="img" aria-label="ConnectWorks service area: all of San Diego County, including San Diego, Oceanside, Carlsbad, Escondido, El Cajon and Chula Vista">
-          <svg viewBox="0 0 520 470" class="hero-map__svg">
-            <defs>
-              <linearGradient id="hmbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1B3D"/><stop offset="1" stop-color="#0B2C66"/></linearGradient>
-              <linearGradient id="hmocean" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#06122b"/><stop offset="1" stop-color="#0a1e44"/></linearGradient>
-              <pattern id="hmgrid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#7DD3FC" stroke-opacity=".08"/></pattern>
-            </defs>
-            <rect width="520" height="470" rx="22" fill="url(#hmbg)"/>
-            <rect width="520" height="470" rx="22" fill="url(#hmgrid)"/>
-            <!-- ocean -->
-            <path d="M0 0 L150 0 C132 110,128 220,150 320 C158 360,168 400,172 470 L0 470 Z" fill="url(#hmocean)" opacity=".85"/>
-            <!-- faint freeways -->
-            <g stroke="#7DD3FC" stroke-opacity=".12" stroke-width="2" fill="none">
-              <path d="M168 40 C176 180,176 260,184 460"/>
-              <path d="M175 300 L470 250"/>
-              <path d="M170 150 L460 120"/>
-            </g>
-            <!-- service-area highlight -->
-            <rect x="52" y="46" width="416" height="388" rx="18" fill="#38BDF8" fill-opacity=".13" stroke="#38BDF8" stroke-opacity=".75" stroke-width="2.5" stroke-dasharray="7 6"/>
-            <!-- coastline -->
-            <path d="M150 0 C132 110,128 220,150 320 C158 360,168 400,172 470" fill="none" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="2"/>
-            <!-- cities -->
-            <g font-family="Inter, 'Segoe UI', sans-serif" font-size="16.5" font-weight="600">
-              <g fill="#7DD3FC"><circle cx="150" cy="84" r="4.2"/><circle cx="150" cy="122" r="4.2"/><circle cx="305" cy="122" r="4.2"/><circle cx="330" cy="266" r="4.2"/><circle cx="196" cy="366" r="4.2"/></g>
-              <g fill="#cbd5e1">
-                <text x="163" y="90">Oceanside</text>
-                <text x="163" y="128">Carlsbad</text>
-                <text x="318" y="128">Escondido</text>
-                <text x="343" y="272">El Cajon</text>
-                <text x="209" y="372">Chula Vista</text>
-              </g>
-              <!-- San Diego marker -->
-              <path d="M175 284c-9 0-16 7-16 16 0 12 16 28 16 28s16-16 16-28c0-9-7-16-16-16z" fill="#38BDF8"/>
-              <circle cx="175" cy="300" r="5.5" fill="#0A1B3D"/>
-              <text x="197" y="306" fill="#ffffff" font-weight="700" font-size="18">San Diego</text>
-            </g>
-          </svg>
-          <div class="hero-map__chip"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> Serving all of San Diego County</div>
+        <div class="hero-map-img">
+          <img src="assets/service-area-map.jpg" alt="ConnectWorks service area — all of San Diego County, including San Diego, Oceanside, Carlsbad, Escondido, El Cajon and Chula Vista" width="1000" height="1000" />
         </div>
       </div>
     </div>
@@ -301,6 +265,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- ============ BUILT FOR COMMERCIAL ============ -->
   <section class="section" id="commercial">
@@ -347,46 +312,46 @@
 
       <div class="cards services-grid">
         <article class="card service-card reveal">
-          <div class="service-card__media media--a"><svg class="service-card__ic" aria-hidden="true"><use href="#i-camera"/></svg></div>
+          <div class="service-card__media media--a"><svg class="service-card__ic" aria-hidden="true"><use href="#i-camera"/></svg><img class="service-card__photo" src="assets/services/video-surveillance.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Video Surveillance</h3>
           <p>HD and 4K camera systems designed to improve visibility, reduce blind spots and help business owners monitor their property remotely.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--b"><svg class="service-card__ic" aria-hidden="true"><use href="#i-lock"/></svg></div>
+          <div class="service-card__media media--b"><svg class="service-card__ic" aria-hidden="true"><use href="#i-lock"/></svg><img class="service-card__photo" src="assets/services/access-control.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Access Control</h3>
           <p>Secure doors, staff areas and restricted spaces with keypads, card readers, mobile credentials and electric strikes.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--c"><svg class="service-card__ic" aria-hidden="true"><use href="#i-intercom"/></svg></div>
+          <div class="service-card__media media--c"><svg class="service-card__ic" aria-hidden="true"><use href="#i-intercom"/></svg><img class="service-card__photo" src="assets/services/intercom.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Intercom &amp; Communication</h3>
           <p>Video intercoms, audio intercoms and door stations that improve visitor management and entry communication.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--d"><svg class="service-card__ic" aria-hidden="true"><use href="#i-cable"/></svg></div>
+          <div class="service-card__media media--d"><svg class="service-card__ic" aria-hidden="true"><use href="#i-cable"/></svg><img class="service-card__photo" src="assets/services/structured-cabling.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Structured Cabling</h3>
           <p>Clean Cat5e, Cat6 and Cat6A cabling for offices, restaurants, warehouses and new commercial buildouts.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--e"><svg class="service-card__ic" aria-hidden="true"><use href="#i-fiber"/></svg></div>
+          <div class="service-card__media media--e"><svg class="service-card__ic" aria-hidden="true"><use href="#i-fiber"/></svg><img class="service-card__photo" src="assets/services/fiber-optics.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Fiber Optics</h3>
           <p>Fiber installation, fusion splicing, testing and high-speed connectivity for growing business environments.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--f"><svg class="service-card__ic" aria-hidden="true"><use href="#i-wifi"/></svg></div>
+          <div class="service-card__media media--f"><svg class="service-card__ic" aria-hidden="true"><use href="#i-wifi"/></svg><img class="service-card__photo" src="assets/services/network-wireless.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Network &amp; Wireless</h3>
           <p>Business-grade Wi-Fi, switches and network setup for stronger coverage, fewer dead zones and smoother operations.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card reveal">
-          <div class="service-card__media media--g"><svg class="service-card__ic" aria-hidden="true"><use href="#i-av"/></svg></div>
+          <div class="service-card__media media--g"><svg class="service-card__ic" aria-hidden="true"><use href="#i-av"/></svg><img class="service-card__photo" src="assets/services/commercial-av.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Commercial Audio &amp; Video</h3>
           <p>Displays, speakers, conference rooms, digital signage and commercial audio/video systems for customer and team spaces.</p>
-          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Request Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link-arrow" href="#contact" data-cta="request-commercial-quote">Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="card service-card service-card--cta reveal">
           <h3>Need several systems at once?</h3>
@@ -420,6 +385,25 @@
     </div>
   </section>
 
+  <!-- ============ LICENSING & STANDARDS (compact) ============ -->
+  <section class="licensing-band">
+    <div class="container licensing-band__inner reveal">
+      <div class="licensing-band__head">
+        <span class="eyebrow"><span class="dot"></span> Licensing &amp; Standards</span>
+        <h3>Built to low-voltage industry standards</h3>
+        <p data-license data-license-on="ConnectWorks is licensed and insured for commercial low voltage across San Diego County — full credentials on request." data-license-off="ConnectWorks is completing its California licensing. Every commercial install already follows the codes, safety and manufacturer standards this work requires — full licensing info on request.">ConnectWorks is completing its California licensing. Every commercial install already follows the codes, safety and manufacturer standards this work requires — full licensing info on request.</p>
+      </div>
+      <ul class="cred-pills">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-badge"/></svg> <span data-license data-license-on="C-7 Low Voltage — Licensed" data-license-off="C-7 Low Voltage — in progress">C-7 Low Voltage — in progress</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> <span data-license data-license-on="Alarm Co. Operator — Licensed" data-license-off="Alarm Co. Operator (BSIS) — in progress">Alarm Co. Operator (BSIS) — in progress</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-cable"/></svg> BICSI cabling standards</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> OSHA-safe installs</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> Manufacturer-certified gear</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg> Permits &amp; inspections</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ============ WHY US ============ -->
   <section class="section section--alt" id="why">
     <div class="container why-grid">
@@ -427,7 +411,7 @@
         <span class="eyebrow"><span class="dot"></span> Why ConnectWorks</span>
         <h2>Honest Recommendations. Clean Installs. Reliable Systems.</h2>
         <p>We focus on commercial low voltage, so you get a partner who understands business deadlines and budgets — and who recommends what actually fits your space, not the most expensive option.</p>
-        <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Commercial Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
 
       <ul class="why-list">
@@ -510,7 +494,7 @@
         </div>
         <div class="reputation__actions">
           <a class="btn btn--outline btn--lg" id="reviewsLink" href="#contact" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg> Read Our Reviews</a>
-          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Quote</a>
+          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
         </div>
       </div>
     </div>
@@ -528,14 +512,13 @@
       <!-- TODO: Replace each placeholder below with a REAL ConnectWorks project photo.
            Drop your images in assets/gallery/ and update the src + alt for each category. -->
       <div class="gallery-grid">
-        <figure class="gallery-item gallery-item--lg reveal"><img src="assets/gallery/network-rack.svg" alt="Structured cabling and organized network rack — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Structured Cabling</figcaption></figure>
-        <figure class="gallery-item reveal"><img src="assets/gallery/surveillance.svg" alt="Commercial security camera installation — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Security Cameras</figcaption></figure>
-        <figure class="gallery-item reveal"><img src="assets/gallery/access-control.svg" alt="Access control keypad at a commercial door — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Access Control</figcaption></figure>
-        <figure class="gallery-item reveal"><img src="assets/gallery/intercom.svg" alt="Video intercom station — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Intercom</figcaption></figure>
-        <figure class="gallery-item reveal"><img src="assets/gallery/cabling.svg" alt="Business Wi-Fi and network patch panel — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Network &amp; Wireless</figcaption></figure>
-        <figure class="gallery-item gallery-item--lg reveal"><img src="assets/gallery/service-van.svg" alt="ConnectWorks local team / service vehicle — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Service Vehicle / Local Team</figcaption></figure>
+        <figure class="gallery-item gallery-item--lg reveal"><img src="assets/gallery/project-cabling.jpg" onerror="this.onerror=null;this.src='assets/gallery/network-rack.svg'" alt="Structured cabling and organized network rack — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Structured Cabling</figcaption></figure>
+        <figure class="gallery-item reveal"><img src="assets/gallery/project-cameras.jpg" onerror="this.onerror=null;this.src='assets/gallery/surveillance.svg'" alt="Commercial security camera installation — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Security Cameras</figcaption></figure>
+        <figure class="gallery-item reveal"><img src="assets/gallery/project-access.jpg" onerror="this.onerror=null;this.src='assets/gallery/access-control.svg'" alt="Access control keypad at a commercial door — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Access Control</figcaption></figure>
+        <figure class="gallery-item reveal"><img src="assets/gallery/project-intercom.jpg" onerror="this.onerror=null;this.src='assets/gallery/intercom.svg'" alt="Video intercom station — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Intercom</figcaption></figure>
+        <figure class="gallery-item reveal"><img src="assets/gallery/project-network.jpg" onerror="this.onerror=null;this.src='assets/gallery/cabling.svg'" alt="Business Wi-Fi and network patch panel — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Network &amp; Wireless</figcaption></figure>
+        <figure class="gallery-item gallery-item--lg reveal"><img src="assets/gallery/project-team.jpg" onerror="this.onerror=null;this.src='assets/gallery/service-van.svg'" alt="ConnectWorks local team / service vehicle — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Service Vehicle / Local Team</figcaption></figure>
       </div>
-      <p class="reviews-note">Placeholder graphics shown — add real photos to <code>assets/gallery/</code> (Security Cameras · Structured Cabling · Access Control · Intercom · Network &amp; Wireless · Commercial AV · Service Vehicle).</p>
     </div>
   </section>
 
@@ -546,7 +529,7 @@
       <h2>Ready to Upgrade Your Business Security, Network or Low Voltage System?</h2>
       <p>Tell us about your commercial space and we'll help you choose the right solution — built around your space, your workflow and your budget.</p>
       <div class="cta-banner__actions">
-        <a class="btn btn--white btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Commercial Quote</a>
+        <a class="btn btn--white btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
         <a class="btn btn--outline-light btn--lg" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
       </div>
     </div>
@@ -556,7 +539,7 @@
   <section class="section section--alt" id="contact">
     <div class="container contact-grid">
       <div class="contact-info reveal">
-        <span class="eyebrow"><span class="dot"></span> Request a Commercial Quote</span>
+        <span class="eyebrow"><span class="dot"></span> Request a Free Quote</span>
         <h2>Let's scope the right system for your business</h2>
         <p>Tell us about your commercial space and project. We'll follow up quickly with honest next steps and a quote built around your needs.</p>
 
@@ -664,7 +647,7 @@
             <textarea id="message" name="message" rows="4" required placeholder="Tell us about your space — number of cameras/doors, square footage, what you're trying to solve, opening date, etc."></textarea>
           </div>
 
-          <button class="btn btn--primary btn--block btn--lg" type="submit" data-cta="request-commercial-quote">Request My Commercial Quote</button>
+          <button class="btn btn--primary btn--block btn--lg" type="submit" data-cta="request-commercial-quote">Request My Free Quote</button>
           <p class="form-disclaimer">ConnectWorks focuses on commercial low voltage, security, cabling and connectivity projects across San Diego County.</p>
           <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
         </form>
@@ -723,7 +706,7 @@
         <li><a href="#process">Our Process</a></li>
         <li><a href="#industries">Industries We Serve</a></li>
         <li><a href="#projects">Project Gallery</a></li>
-        <li><a href="#contact">Request a Quote</a></li>
+        <li><a href="#contact">Request a Free Quote</a></li>
       </ul>
     </div>
 
@@ -735,7 +718,7 @@
         <li><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg> <a href="https://www.connectworks-sd.com" target="_blank" rel="noopener">www.connectworks-sd.com</a></li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> San Diego County, including San Diego, Oceanside, Carlsbad &amp; nearby areas</li>
       </ul>
-      <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote" style="margin-top:18px">Request a Commercial Quote</a>
+      <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote" style="margin-top:18px">Request a Free Quote</a>
     </div>
   </div>
 
@@ -748,7 +731,7 @@
 <!-- Sticky mobile call/quote bar -->
 <div class="mobile-bar" aria-label="Quick contact">
   <a class="btn btn--white btn--block" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call</a>
-  <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote">Request Quote</a>
+  <a class="btn btn--primary btn--block" href="#contact" data-cta="request-commercial-quote">Free Quote</a>
 </div>
 
 <button class="to-top" id="toTop" aria-label="Back to top" hidden><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>

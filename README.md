@@ -37,7 +37,7 @@ vercel.json · package.json · .env.example · robots.txt · sitemap.xml
 
 | Variable | What it does |
 |---|---|
-| `HAS_LICENSES` | `false` shows "Professional Low Voltage Installations" / "Licensing info upon request". Set `true` (with `LICENSE_TEXT`) **only when Omar provides license/insurance numbers** → shows "Licensed & Insured". |
+| `HAS_LICENSES` | `false` shows honest "in progress / available on request" wording everywhere — including the **Licensing & Standards** section (C‑7, Alarm Company Operator shown as "in progress"). Set `true` **only when Omar provides license numbers** → flips badges and that section to "Licensed". |
 | `REVIEWS` | Empty `[]` shows the safe reputation block (no fake reviews). Add real, verified `{name, meta, stars, quote}` objects to render testimonial cards. |
 | `YELP_URL` / `GOOGLE_REVIEWS_URL` | When set, the "Read Our Reviews" button links to your public profile. |
 | `META_PIXEL_ID` | Leave `""` for now. When set, loads Meta Pixel + fires `PageView` and a `Lead` event on submit. |
