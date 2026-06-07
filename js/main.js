@@ -104,10 +104,12 @@
   function validPhone(v) { return (v.replace(/\D/g, '').length >= 10); }
 
   if (form) {
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
       // Honeypot: silently ignore bots
       var hp = form.querySelector('[name="company-website"]');
-      if (hp && hp.value) { e.preventDefault(); return; }
+      if (hp && hp.value) { return; }
 
       var name = $('#name'), phone = $('#phone'), email = $('#email');
       var ok = true;
@@ -119,23 +121,46 @@
       if (!validEmail(email.value)) { email.setAttribute('aria-invalid', 'true'); ok = false; }
 
       if (!ok) {
-        e.preventDefault();
         showStatus('Please add your name, a valid phone, and a valid email so we can reach you.', 'error');
         var firstBad = form.querySelector('[aria-invalid="true"]');
         if (firstBad) firstBad.focus();
         return;
       }
 
-      // If no real backend action is configured, intercept and confirm locally
-      // so the form still gives users feedback. Wire up Formspree/Netlify to
-      // actually receive the lead (see README).
-      var action = form.getAttribute('action');
-      if (!action || action === '#' || action.trim() === '') {
-        e.preventDefault();
-        showStatus('Thanks! Your request was received. We’ll call you shortly at ' + phone.value + '. For immediate help, call 619-786-1810.', 'success');
-        form.reset();
+      var submitBtn = form.querySelector('[type="submit"]');
+      var originalLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+      var payload = {
+        name: name.value.trim(),
+        business: (form.business && form.business.value || '').trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(),
+        service: (form.service && form.service.value) || '',
+        message: (form.message && form.message.value || '').trim(),
+        'company-website': hp ? hp.value : ''
+      };
+
+      try {
+        var resp = await fetch(form.getAttribute('action') || '/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        var result = {};
+        try { result = await resp.json(); } catch (_) {}
+
+        if (resp.ok && result.ok !== false) {
+          showStatus('Thanks! Your request was received — we’ll get back to you shortly. For immediate help, call 619-786-1810.', 'success');
+          form.reset();
+        } else {
+          showStatus((result && result.error ? result.error + ' ' : '') + 'You can also call us directly at 619-786-1810.', 'error');
+        }
+      } catch (err) {
+        showStatus('We couldn’t submit the form right now. Please call or text us at 619-786-1810 and we’ll help right away.', 'error');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
       }
-      // Otherwise let the browser submit to the configured endpoint.
     });
   }
 })();

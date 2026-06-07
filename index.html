@@ -508,9 +508,8 @@
       </div>
 
       <div class="contact-form-wrap reveal">
-        <!-- To collect leads: set the form action to your Formspree/endpoint, or deploy on Netlify (data-netlify works automatically). -->
-        <form class="quote-form" id="quoteForm" name="quote" method="POST" action="#" data-netlify="true" novalidate>
-          <input type="hidden" name="form-name" value="quote" />
+        <!-- Submits to the Vercel serverless function at /api/lead, which stores the lead in Supabase. -->
+        <form class="quote-form" id="quoteForm" name="quote" method="POST" action="/api/lead" novalidate>
           <p class="hp" aria-hidden="true"><label>Don't fill this out: <input name="company-website" tabindex="-1" autocomplete="off" /></label></p>
 
           <h3>Request your free quote</h3>
