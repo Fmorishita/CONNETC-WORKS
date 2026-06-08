@@ -99,6 +99,7 @@ module.exports = async function handler(req, res) {
     service: clean(data.service),
     message: clean(data.message),
     source: 'website',
+    status: 'New',
     user_agent: (req.headers && req.headers['user-agent']) || null
   };
   var full = Object.assign({}, core, {

@@ -144,3 +144,36 @@ The service-role key is never exposed to the browser (server-side function only)
   to the CMS is the next step (same `data-cw` / renderer pattern).
 - Projects/Gallery is fully editable in admin; wiring it to replace the public
   gallery tiles is a follow-up (pattern identical to Services).
+
+---
+
+## 🧰 Operations Hub (`/ops`) — Phase 1: Schedule + Routes
+
+Private internal tool for Omar (separate from the public CMS at `/admin`). Same
+stack (static SPA + Supabase Auth/DB), same login users. **Phase 1** ships:
+**Dashboard, Leads, Calendar/Visits, Route Planner (basic mode), Settings**, plus
+the full database for **Phase 2 (Quotes + PDF, Follow-ups, Projects, Materials)**.
+
+### Setup (one time)
+1. Supabase → SQL Editor → run [`supabase/ops_schema.sql`](supabase/ops_schema.sql)
+   (creates all Ops tables, private RLS, and seed; extends `leads`).
+2. Use the same admin user you created for the CMS. Go to **`/ops`** and sign in.
+3. In **Settings**, set your **Base address** (used as the route start/end).
+4. *(Optional)* Google Maps API key enables auto-optimization later; without it the
+   Route Planner runs in **basic mode** (manual order + full multi-stop Google Maps link).
+
+### How to…
+- **Add a lead:** Leads → *New lead* (or they arrive automatically from the website form).
+- **Schedule a visit:** open a lead → *Schedule Site Visit* (prefills the data), or Calendar → *New visit*.
+- **Optimize a route:** Route Planner → pick the date → set Start/End → reorder stops (▲▼) → **Open Route in Google Maps** (multi-stop) → **Save Route Order**.
+- **Open in Google Maps:** every lead/visit has a Maps button; the planner builds the full route link.
+- **Print the day:** Route Planner → **Print Daily Route** (client, address, phone, service, priority, time, notes).
+- **Settings:** company info, base address, defaults, team members.
+
+### Security
+All Ops tables are **authenticated-only** (RLS) — no public access. Leads stay private.
+
+### Phase 2 (next)
+Quote Builder (line items, totals, templates) + professional **PDF** + Follow-up
+reminders + Projects + Materials checklist. Tables already created & seeded
+(quote templates included), so Phase 2 is UI only.
