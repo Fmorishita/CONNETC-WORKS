@@ -8,5 +8,5 @@
    ========================================================= */
 window.CW_CONFIG = {
   SUPABASE_URL: "https://kpwerpscygpwsqueuihu.supabase.co",
-  SUPABASE_ANON_KEY: "" // <-- paste your anon/public key here
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtwd2VycHNjeWdwd3NxdWV1aWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3ODc0NTUsImV4cCI6MjA5NjM2MzQ1NX0.fTC0Bc70nxKMav_ynrEblkLY3gvBEoxA-n73ZUCDFtQ"
 };
