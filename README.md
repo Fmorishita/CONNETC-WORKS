@@ -4,6 +4,8 @@ Modern, conversion-focused marketing site for **ConnectWorks Low Voltage Solutio
 
 Lightweight static site (HTML + CSS + vanilla JS) with one **Vercel serverless function** that saves quote requests into **Supabase**. Fast-loading and ready for a future **Meta Ads** stage (UTM capture, CTA tracking, pixel scaffolding, thank-you page).
 
+It now includes an **admin CMS** (`/admin`) so the owner can edit content without code — see **[Admin panel (CMS)](#-admin-panel-cms)**.
+
 ---
 
 ## ✨ Highlights
@@ -71,3 +73,74 @@ Already connected to Vercel? Every branch/PR gets an automatic **preview URL** (
 - All primary buttons carry `data-cta` (`request-commercial-quote`, `call-now`) and emit `dataLayer` events + pixel events when a pixel is configured.
 - Meta Pixel is scaffolded but **off** until you set `META_PIXEL_ID`; it fires `Lead` on successful submit.
 - `/thank-you.html` is available as a URL-based conversion destination.
+
+---
+
+## 🛠 Admin panel (CMS)
+
+A lightweight CMS so Omar can edit the site without touching code. Built **on the
+existing static site** (no framework rewrite) using **Supabase** for Auth, the
+database, and image storage. The public page reads content from Supabase and
+**falls back to the built-in HTML** if the CMS is empty or unreachable — so the
+site never breaks.
+
+### What you can edit
+General settings (company info, phone, email, social links, **license status**,
+review rating, logo/favicon/OG image) · Hero · CTA banner · Trust badges ·
+Services · Industries · Why-Choose-Us · Process · Problems · Projects/Gallery ·
+Reviews · SEO · Leads (with status) · Media library · Icon picker.
+
+### One-time setup (≈10 min)
+1. **Create the tables:** Supabase → SQL Editor → run [`supabase/cms_schema.sql`](supabase/cms_schema.sql).
+   It creates all content tables, security rules (RLS), the public `media` storage
+   bucket, and seeds the current site content.
+2. **Connect the site to Supabase:** open `js/cw-config.js` and paste your
+   **anon/public key** (Supabase → Settings → API). The URL is already filled.
+   *(The anon key is safe to expose — RLS only allows writes to logged-in admins.)*
+3. **Create the admin user:** Supabase → Authentication → Users → **Add user**
+   (email + password) and mark it confirmed. (There is no public sign-up — login only.)
+4. Go to **`/admin`**, sign in, and start editing.
+
+### How to use it
+- **Edit text:** open a section (e.g. *Home / Hero*), change the fields, **Save**.
+  Tip: in the H1, wrap the highlighted words in `**double asterisks**`.
+- **Upload images:** any image field has **Choose / upload** → opens the Media
+  Library (or use *Media Library* in the sidebar). Uploads go to Supabase Storage.
+- **Change icons:** any icon field opens an **icon picker**; the chosen name is
+  stored as a string and rendered on the site.
+- **Add Services / Industries / Projects / Reviews:** open the section → **New** →
+  fill in → Save. Use **Active** to show/hide and **sort order** to reorder.
+  Delete asks for confirmation.
+- **Licenses:** in *General Settings*, toggle **Has licenses?** — the site flips
+  between "Licensed & Insured" and the professional / available-on-request text.
+- **Leads:** the *Leads* tab lists form submissions and lets you set a status
+  (new → contacted → quoted → won → lost).
+- **Preview:** the **Preview site** button (top-right) opens the live site.
+
+### Environment variables
+| Where | Var | Purpose |
+|---|---|---|
+| `js/cw-config.js` | `SUPABASE_ANON_KEY` | Public read + admin auth (browser-safe) |
+| Vercel env | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Lead-capture function (server-side) |
+| Vercel env (optional) | `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL` | Email each lead (see above) |
+
+### Deploy
+Static site — deploy on Vercel as before. The CMS needs **no build step**.
+After step 1–3 above, `/admin` works in production. Public content updates appear
+on the next page load (no redeploy needed for content changes).
+
+### Security
+RLS: anyone can **read** content; only **authenticated** admins can write. Leads
+are **not** publicly readable. Storage `media` bucket is public-read, admin-write.
+The service-role key is never exposed to the browser (server-side function only).
+
+### Known limitations / TODO
+- **SEO** edits hydrate client-side (good for users & Google's JS rendering, not as
+  strong as server-rendered). For perfect SEO control, a Next.js build would be needed.
+- Public hydration currently covers Hero, CTA banner, Services, Industries,
+  Why-Us, Process, Problems, Reviews, Trust badges, contact info, social links,
+  license text and SEO. **Footer link lists and the contact-form field options**
+  are editable in the data model but still render from static HTML — wiring those
+  to the CMS is the next step (same `data-cw` / renderer pattern).
+- Projects/Gallery is fully editable in admin; wiring it to replace the public
+  gallery tiles is a follow-up (pattern identical to Services).

@@ -194,7 +194,7 @@
     <div class="header-cta">
       <a class="btn btn--ghost btn--sm" href="tel:+16197861810" data-cta="call-now">
         <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
-        <span>619-786-1810</span>
+        <span data-cw="settings.phone">619-786-1810</span>
       </a>
       <a class="btn btn--primary btn--sm" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
     </div>
@@ -230,14 +230,14 @@
     <div class="hero__bg" aria-hidden="true"></div>
     <div class="container hero__grid">
       <div class="hero__copy reveal">
-        <span class="eyebrow"><span class="dot"></span> San Diego County · Commercial Low Voltage Experts</span>
-        <h1>Commercial Low Voltage &amp; Security Solutions for <span class="grad">San Diego Businesses</span></h1>
-        <p class="hero__sub">From security cameras and access control to structured cabling, business Wi-Fi, intercom and commercial audio/video, ConnectWorks designs and installs reliable systems built around your space, budget and operations.</p>
+        <span class="eyebrow"><span class="dot"></span> <span data-cw="hero.eyebrow">San Diego County · Commercial Low Voltage Experts</span></span>
+        <h1 data-cw-html="hero.title">Commercial Low Voltage &amp; Security Solutions for <span class="grad">San Diego Businesses</span></h1>
+        <p class="hero__sub" data-cw="hero.subtitle">From security cameras and access control to structured cabling, business Wi-Fi, intercom and commercial audio/video, ConnectWorks designs and installs reliable systems built around your space, budget and operations.</p>
         <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--outline btn--lg" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
+          <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote" data-cw-href="hero.cta_link"><span data-cw-label="hero.cta_text">Request a Free Quote</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--outline btn--lg" href="tel:+16197861810" data-cta="call-now" data-cw-href="hero.cta2_link"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> <span data-cw-label="hero.cta2_text">Call 619-786-1810</span></a>
         </div>
-        <ul class="trust-badges">
+        <ul class="trust-badges" id="cwTrustBadges">
           <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> 10+ Years of Experience</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg> 1-Year Labor &amp; Equipment Warranty</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> San Diego County Local Support</li>
@@ -310,7 +310,7 @@
         <p>One trusted partner for the systems that keep your business secure, connected and running — from a single camera to a full commercial buildout.</p>
       </div>
 
-      <div class="cards services-grid">
+      <div class="cards services-grid" id="cwServices">
         <article class="card service-card reveal">
           <div class="service-card__media media--a"><svg class="service-card__ic" aria-hidden="true"><use href="#i-camera"/></svg><img class="service-card__photo" src="assets/services/video-surveillance.jpg" alt="" loading="lazy" onerror="this.remove()"/></div>
           <h3>Video Surveillance</h3>
@@ -371,7 +371,7 @@
         <p>If any of these are getting in the way, there's usually a clean, right-sized fix.</p>
       </div>
 
-      <ul class="problems-grid">
+      <ul class="problems-grid" id="cwProblems">
         <li class="problem reveal"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg> Poor camera coverage or outdated DVR/NVR systems</li>
         <li class="problem reveal"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg> Messy or unreliable cabling</li>
         <li class="problem reveal"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg> Weak Wi-Fi or network dead zones</li>
@@ -411,10 +411,10 @@
         <span class="eyebrow"><span class="dot"></span> Why ConnectWorks</span>
         <h2>Honest Recommendations. Clean Installs. Reliable Systems.</h2>
         <p>We focus on commercial low voltage, so you get a partner who understands business deadlines and budgets — and who recommends what actually fits your space, not the most expensive option.</p>
-        <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--primary btn--lg" href="#contact" data-cta="request-commercial-quote" data-cw-href="hero.cta_link"><span data-cw-label="hero.cta_text">Request a Free Quote</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
 
-      <ul class="why-list">
+      <ul class="why-list" id="cwFeatures">
         <li class="reveal"><span class="why-ic"><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg></span><div><h3>Honest, No-Oversell Approach</h3><p>We recommend what fits your space and goals — not the most expensive option.</p></div></li>
         <li class="reveal"><span class="why-ic"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg></span><div><h3>10+ Years of Field Experience</h3><p>Hands-on experience across security, cabling, networks, intercom and commercial AV.</p></div></li>
         <li class="reveal"><span class="why-ic"><svg class="ic" aria-hidden="true"><use href="#i-office"/></svg></span><div><h3>Commercial-Ready Installations</h3><p>Clean, organized work designed for businesses, not temporary fixes.</p></div></li>
@@ -434,7 +434,7 @@
         <p>Consultative, transparent and built to get your commercial project done right.</p>
       </div>
 
-      <ol class="process-grid">
+      <ol class="process-grid" id="cwProcess">
         <li class="process-step reveal"><span class="process-step__num">01</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><h3>Consultation</h3><p>Tell us what you need, what problem you're trying to solve and what type of business you operate.</p></li>
         <li class="process-step reveal"><span class="process-step__num">02</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-clipboard"/></svg></span><h3>Site Assessment</h3><p>We review your layout, coverage needs, cabling routes, access points and technical requirements.</p></li>
         <li class="process-step reveal"><span class="process-step__num">03</span><span class="process-step__ic"><svg class="ic" aria-hidden="true"><use href="#i-fair"/></svg></span><h3>Honest Recommendation</h3><p>You get a clear, itemized proposal with the right solution for your space and budget.</p></li>
@@ -453,7 +453,7 @@
         <p>We work with private businesses of all kinds — from a single storefront to multi-tenant commercial buildings.</p>
       </div>
 
-      <ul class="industries-grid">
+      <ul class="industries-grid" id="cwIndustries">
         <li class="industry reveal"><svg class="ic" aria-hidden="true"><use href="#i-restaurant"/></svg> Restaurants</li>
         <li class="industry reveal"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg> Coffee Shops</li>
         <li class="industry reveal"><svg class="ic" aria-hidden="true"><use href="#i-warehouse"/></svg> Warehouses</li>
@@ -526,8 +526,8 @@
   <section class="cta-banner">
     <div class="cta-banner__bg" aria-hidden="true"></div>
     <div class="container cta-banner__inner reveal">
-      <h2>Ready to Upgrade Your Business Security, Network or Low Voltage System?</h2>
-      <p>Tell us about your commercial space and we'll help you choose the right solution — built around your space, your workflow and your budget.</p>
+      <h2 data-cw="cta.title">Ready to Upgrade Your Business Security, Network or Low Voltage System?</h2>
+      <p data-cw="cta.content">Tell us about your commercial space and we'll help you choose the right solution — built around your space, your workflow and your budget.</p>
       <div class="cta-banner__actions">
         <a class="btn btn--white btn--lg" href="#contact" data-cta="request-commercial-quote">Request a Free Quote</a>
         <a class="btn btn--outline-light btn--lg" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
@@ -544,8 +544,8 @@
         <p>Tell us about your commercial space and project. We'll follow up quickly with honest next steps and a quote built around your needs.</p>
 
         <ul class="contact-list">
-          <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></span><div><small>Call or text</small><a href="tel:+16197861810" data-cta="call-now">619-786-1810</a></div></li>
-          <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span><div><small>Email</small><a href="mailto:info@connectworks-sd.com">info@connectworks-sd.com</a></div></li>
+          <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></span><div><small>Call or text</small><a href="tel:+16197861810" data-cta="call-now" data-cw="settings.phone">619-786-1810</a></div></li>
+          <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span><div><small>Email</small><a href="mailto:info@connectworks-sd.com" data-cw="settings.email">info@connectworks-sd.com</a></div></li>
           <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><div><small>Service area</small><span>San Diego County — San Diego, Oceanside, Carlsbad &amp; nearby</span></div></li>
           <li><span class="contact-list__ic"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg></span><div><small>Hours</small><span>Mon–Fri · 7:00am – 6:00pm</span></div></li>
         </ul>
@@ -679,9 +679,9 @@
       <p class="footer-about">Commercial low voltage, security, cabling and connectivity solutions across San Diego County. Honest recommendations, clean work and reliable local support.</p>
       <p class="footer-license" data-license>Professional Low Voltage Installations · Licensing information available upon request</p>
       <div class="footer-social">
-        <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-facebook"/></svg></a>
-        <a href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-        <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+        <a href="https://www.facebook.com/" aria-label="Facebook" data-social="facebook" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-facebook"/></svg></a>
+        <a href="https://www.linkedin.com/" aria-label="LinkedIn" data-social="linkedin" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+        <a href="https://www.instagram.com/" aria-label="Instagram" data-social="instagram" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg></a>
       </div>
     </div>
 
@@ -713,8 +713,8 @@
     <div class="footer-col footer-contact">
       <h4>Contact</h4>
       <ul>
-        <li><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> <a href="tel:+16197861810" data-cta="call-now">619-786-1810</a></li>
-        <li><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg> <a href="mailto:info@connectworks-sd.com">info@connectworks-sd.com</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> <a href="tel:+16197861810" data-cta="call-now" data-cw="settings.phone">619-786-1810</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg> <a href="mailto:info@connectworks-sd.com" data-cw="settings.email">info@connectworks-sd.com</a></li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg> <a href="https://www.connectworks-sd.com" target="_blank" rel="noopener">www.connectworks-sd.com</a></li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg> San Diego County, including San Diego, Oceanside, Carlsbad &amp; nearby areas</li>
       </ul>
@@ -737,6 +737,8 @@
 <button class="to-top" id="toTop" aria-label="Back to top" hidden><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>
 
 <!-- Meta Pixel placeholder: pixel only loads if CONNECTWORKS_CONFIG.META_PIXEL_ID is set. -->
+<script src="js/cw-config.js" defer></script>
+<script src="js/content.js" defer></script>
 <script src="js/main.js" defer></script>
 </body>
 </html>
