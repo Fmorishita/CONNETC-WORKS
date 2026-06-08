@@ -105,9 +105,11 @@
   /* ---------- auth ---------- */
   var state = { view:'settings', session:null };
 
+  // Show the login UI immediately so the page never hangs on "Loading…".
+  route();
   (async function init(){
-    try { var r = await sb.auth.getSession(); state.session = (r && r.data) ? r.data.session : null; route(); }
-    catch(e){ fatal('Auth error: ' + (e && e.message || e)); }
+    try { var r = await sb.auth.getSession(); if (r && r.data && r.data.session) { state.session = r.data.session; route(); } }
+    catch(e){ /* keep login visible */ }
   })();
   sb.auth.onAuthStateChange(function(_e, session){ state.session = session; route(); });
 
