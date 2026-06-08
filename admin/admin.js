@@ -121,7 +121,7 @@
   function renderLogin(){
     app.innerHTML =
       '<div class="login-wrap"><form class="login-card" id="loginForm">'
-      + '<div class="login-brand"><img src="../assets/logo-connectworks.png" alt=""><strong>ConnectWorks Admin</strong></div>'
+      + '<div class="login-brand"><img src="/assets/logo-connectworks.png" alt=""><strong>ConnectWorks Admin</strong></div>'
       + '<h1>Sign in</h1><p>Manage your website content.</p>'
       + '<div class="field"><label>Email</label><input type="email" id="li-email" required></div>'
       + '<div class="field"><label>Password</label><input type="password" id="li-pass" required></div>'
@@ -144,7 +144,7 @@
     });
     app.innerHTML =
       '<div class="app"><aside class="sidebar">'
-      + '<div class="brand"><img src="../assets/logo-connectworks.png" alt=""> Admin</div>'
+      + '<div class="brand"><img src="/assets/logo-connectworks.png" alt=""> Admin</div>'
       + '<div class="grp">Content</div>' + nav
       + '</aside><div class="main">'
       + '<div class="topbar"><h2 id="pageTitle"></h2><div class="right">'
