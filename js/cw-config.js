@@ -14,5 +14,5 @@ window.CW_CONFIG = {
      Leave "" to keep the Route Planner in basic mode (free deep-links).
      When set, the advanced route features (embedded map + automatic stop
      optimization) activate. Restrict it in Google Cloud to your domains. */
-  GOOGLE_MAPS_API_KEY: ""
+  GOOGLE_MAPS_API_KEY: "AIzaSyBAkyCykzkBu9DD1nZ0LSiPYMwoUa-GpXI"
 };
