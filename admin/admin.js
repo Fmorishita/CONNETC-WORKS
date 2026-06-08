@@ -81,6 +81,16 @@
       {n:'meta_title'},{n:'meta_description',t:'textarea'},{n:'og_title'},{n:'og_description',t:'textarea'},
       {n:'og_image',l:'OG image',t:'image'},{n:'canonical_url'}
     ]},
+    { key:'form', label:'Contact Form', icon:'clipboard', table:'form_settings', single:true, match:{id:1}, fields:[
+      {n:'business_types',l:'Business type options (one per line)',t:'textarea'},
+      {n:'services',l:'Service options (one per line)',t:'textarea'},
+      {n:'project_types',l:'Project type options (one per line)',t:'textarea'},
+      {n:'timelines',l:'Timeline options (one per line)',t:'textarea'},
+      {n:'budgets',l:'Budget options (one per line)',t:'textarea'},
+      {n:'submit_text',l:'Submit button text'},
+      {n:'thankyou_message',l:'Thank-you message',t:'textarea'},
+      {n:'success_message',l:'Inline success message',t:'textarea'}
+    ]},
     { key:'leads', label:'Leads', icon:'mail', table:'leads', leads:true },
     { key:'media', label:'Media Library', icon:'doc', media:true }
   ];

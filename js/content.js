@@ -35,7 +35,9 @@
     rest('process_steps?select=*&active=eq.true&order=sort_order'),
     rest('problems?select=*&active=eq.true&order=sort_order'),
     rest('reviews?select=*&active=eq.true&order=sort_order'),
-    rest('seo_settings?select=*&page_key=eq.home')
+    rest('seo_settings?select=*&page_key=eq.home'),
+    rest('projects?select=*&active=eq.true&order=sort_order'),
+    rest('form_settings?select=*&id=eq.1')
   ]).then(function (res) {
     var settings = (res[0] && res[0][0]) || {};
     var sections = {}; (res[1] || []).forEach(function (s) { sections[s.section_key] = s; });
@@ -45,12 +47,14 @@
     hydrateLinks(settings);
     hydrateLicense(settings);
     if (res[2] && res[2].length) renderBadges(res[2]);
-    if (res[3] && res[3].length) renderServices(res[3]);
+    if (res[3] && res[3].length) { renderServices(res[3]); renderFooterServices(res[3]); }
     if (res[4] && res[4].length) renderIndustries(res[4]);
     if (res[5] && res[5].length) renderFeatures(res[5]);
     if (res[6] && res[6].length) renderProcess(res[6]);
     if (res[7] && res[7].length) renderProblems(res[7]);
     renderReviews(res[8] || [], settings);
+    if (res[10] && res[10].length) renderGallery(res[10]);
+    applyFormSettings((res[11] && res[11][0]) || null);
     hydrateSEO(data);
   });
 
@@ -183,6 +187,34 @@
       if (summary) summary.hidden = true;
       if (reputation) reputation.hidden = false;
     }
+  }
+
+  function renderGallery(rows) {
+    var grid = $('#cwGallery'); if (!grid) return;
+    grid.innerHTML = rows.map(function (p) {
+      var lg = p.featured ? ' gallery-item--lg' : '';
+      var cap = esc(p.title) + (p.is_real_project ? '' : ' · Work Example');
+      return '<figure class="gallery-item' + lg + ' reveal is-visible"><img src="' + esc(p.image_url || '') + '" alt="' + esc(p.title) + '" loading="lazy" width="480" height="360"><figcaption>' + cap + '</figcaption></figure>';
+    }).join('');
+  }
+
+  function renderFooterServices(rows) {
+    var ul = $('#cwFooterServices'); if (!ul) return;
+    ul.innerHTML = rows.map(function (s) { return '<li><a href="#services">' + esc(s.title) + '</a></li>'; }).join('');
+  }
+
+  function applyFormSettings(f) {
+    if (!f) return;
+    function opts(id, text) {
+      var el = $('#' + id); if (!el || !text) return;
+      var lines = String(text).split(/\r?\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+      if (!lines.length) return;
+      el.innerHTML = '<option value="">Select…</option>' + lines.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
+    }
+    opts('business_type', f.business_types); opts('service', f.services);
+    opts('project_type', f.project_types); opts('timeline', f.timelines); opts('budget', f.budgets);
+    var btn = $('#cwSubmitBtn'); if (btn && f.submit_text) btn.textContent = f.submit_text;
+    var tm = $('#cwThanksMsg'); if (tm && f.thankyou_message) tm.textContent = f.thankyou_message;
   }
 
   /* ---- SEO (client-side) ---- */

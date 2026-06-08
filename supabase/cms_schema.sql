@@ -133,6 +133,16 @@ create table if not exists public.seo_settings (
   updated_at timestamptz default now()
 );
 
+create table if not exists public.form_settings (
+  id int primary key default 1,
+  business_types text, services text, project_types text, timelines text, budgets text,
+  submit_text text default 'Request My Free Quote',
+  success_message text default 'Thanks! Your request was received — we''ll get back to you shortly. For immediate help, call 619-786-1810.',
+  thankyou_message text default 'We''ll review your project and reach out shortly with honest next steps. Need to talk now?',
+  updated_at timestamptz default now(),
+  constraint form_settings_singleton check (id = 1)
+);
+
 -- Leads already exist from the lead form; ensure status + admin columns -----
 create table if not exists public.leads (
   id uuid primary key default gen_random_uuid(),
@@ -151,7 +161,7 @@ alter table public.leads add column if not exists status text default 'new';
 do $$ declare t text;
 begin
   foreach t in array array['site_settings','home_sections','trust_badges','services',
-    'industries','features','process_steps','problems','projects','reviews','seo_settings']
+    'industries','features','process_steps','problems','projects','reviews','seo_settings','form_settings']
   loop
     execute format('drop trigger if exists trg_touch_%1$s on public.%1$s;', t);
     execute format('create trigger trg_touch_%1$s before update on public.%1$s
@@ -168,7 +178,7 @@ do $$ declare t text;
 begin
   -- content tables: public read + authenticated write
   foreach t in array array['site_settings','home_sections','trust_badges','services',
-    'industries','features','process_steps','problems','projects','reviews','seo_settings']
+    'industries','features','process_steps','problems','projects','reviews','seo_settings','form_settings']
   loop
     execute format('alter table public.%I enable row level security;', t);
     execute format('drop policy if exists "public read %1$s" on public.%1$s;', t);
@@ -283,6 +293,24 @@ insert into public.seo_settings (page_key, meta_title, meta_description, canonic
  'ConnectWorks provides commercial low voltage, security camera installation, access control, structured cabling, fiber optics, network, intercom and commercial AV solutions across San Diego County.',
  'https://www.connectworks-sd.com/')
 on conflict (page_key) do nothing;
+
+insert into public.projects (title, category, image_url, is_real_project, featured, sort_order) values
+('Structured Cabling','Structured Cabling','assets/gallery/project-cabling.jpg',true,true,1),
+('Security Cameras','Security Cameras','assets/gallery/project-cameras.jpg',true,false,2),
+('Access Control','Access Control','assets/gallery/project-access.jpg',true,false,3),
+('Intercom','Intercom','assets/gallery/project-intercom.jpg',true,false,4),
+('Network & Wireless','Network & Wireless','assets/gallery/project-network.jpg',true,false,5),
+('Service Vehicle / Local Team','Service Vehicle / Local Team','assets/gallery/project-team.jpg',true,true,6)
+on conflict do nothing;
+
+insert into public.form_settings (id, business_types, services, project_types, timelines, budgets) values
+(1,
+ E'Restaurant / Coffee Shop\nWarehouse\nRetail Store\nAuto Shop\nOffice\nCommercial Buildout\nProperty Manager\nOther Commercial Property',
+ E'Video Surveillance\nAccess Control\nStructured Cabling\nFiber Optics\nNetwork & Wireless\nIntercom & Communication\nCommercial Audio & Video\nMultiple Services / Not Sure Yet',
+ E'New Installation\nUpgrade Existing System\nNew Buildout / Remodel\nRepair / Service',
+ E'As soon as possible\nThis month\n1–3 months\nPlanning ahead',
+ E'Under $1,000\n$1,000–$3,000\n$3,000–$5,000\n$5,000–$10,000\n$10,000+\nNot sure yet')
+on conflict (id) do nothing;
 
 -- NOTE: Reviews are intentionally NOT seeded with fake testimonials.
 -- Add real ones from the admin panel (or here) when available.

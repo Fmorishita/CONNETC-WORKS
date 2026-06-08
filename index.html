@@ -511,7 +511,7 @@
 
       <!-- TODO: Replace each placeholder below with a REAL ConnectWorks project photo.
            Drop your images in assets/gallery/ and update the src + alt for each category. -->
-      <div class="gallery-grid">
+      <div class="gallery-grid" id="cwGallery">
         <figure class="gallery-item gallery-item--lg reveal"><img src="assets/gallery/project-cabling.jpg" onerror="this.onerror=null;this.src='assets/gallery/network-rack.svg'" alt="Structured cabling and organized network rack — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Structured Cabling</figcaption></figure>
         <figure class="gallery-item reveal"><img src="assets/gallery/project-cameras.jpg" onerror="this.onerror=null;this.src='assets/gallery/surveillance.svg'" alt="Commercial security camera installation — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Security Cameras</figcaption></figure>
         <figure class="gallery-item reveal"><img src="assets/gallery/project-access.jpg" onerror="this.onerror=null;this.src='assets/gallery/access-control.svg'" alt="Access control keypad at a commercial door — replace with real photo" loading="lazy" width="480" height="360"/><figcaption>Access Control</figcaption></figure>
@@ -647,7 +647,7 @@
             <textarea id="message" name="message" rows="4" required placeholder="Tell us about your space — number of cameras/doors, square footage, what you're trying to solve, opening date, etc."></textarea>
           </div>
 
-          <button class="btn btn--primary btn--block btn--lg" type="submit" data-cta="request-commercial-quote">Request My Free Quote</button>
+          <button class="btn btn--primary btn--block btn--lg" type="submit" data-cta="request-commercial-quote" id="cwSubmitBtn">Request My Free Quote</button>
           <p class="form-disclaimer">ConnectWorks focuses on commercial low voltage, security, cabling and connectivity projects across San Diego County.</p>
           <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
         </form>
@@ -656,7 +656,7 @@
         <div class="form-thanks" id="formThanks" hidden>
           <span class="form-thanks__ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
           <h3>Thank you — your request was received.</h3>
-          <p>We'll review your project and reach out shortly with honest next steps. Need to talk now?</p>
+          <p id="cwThanksMsg">We'll review your project and reach out shortly with honest next steps. Need to talk now?</p>
           <a class="btn btn--primary btn--lg btn--block" href="tel:+16197861810" data-cta="call-now"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Call 619-786-1810</a>
         </div>
       </div>
@@ -687,7 +687,7 @@
 
     <div class="footer-col">
       <h4>Services</h4>
-      <ul>
+      <ul id="cwFooterServices">
         <li><a href="#services">Video Surveillance</a></li>
         <li><a href="#services">Access Control</a></li>
         <li><a href="#services">Structured Cabling</a></li>
