@@ -5,11 +5,12 @@
   'use strict';
   var CFG = window.CW_CONFIG || {};
   var app = document.getElementById('app');
-  if (!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY || !window.supabase) {
-    app.innerHTML = '<div class="center-msg"><h2>Admin not configured</h2><p>Add your Supabase anon key in <code>js/cw-config.js</code>, then reload.</p></div>';
-    return;
-  }
-  var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+  function fatal(msg){ app.innerHTML = '<div class="center-msg"><h2>Admin error</h2><p>'+msg+'</p><p><button class="btn" onclick="location.reload()">Reload</button></p></div>'; }
+  if (!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY) { fatal('Missing Supabase settings in <code>js/cw-config.js</code>.'); return; }
+  if (!window.supabase || !window.supabase.createClient) { fatal('The Supabase library did not load. Check your internet/ad-blocker and reload.'); return; }
+  var sb;
+  try { sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY); }
+  catch (e) { fatal('Could not initialize Supabase: ' + (e && e.message || e)); return; }
 
   /* ---------- icon set (matches the public site sprite) ---------- */
   var ICONS = ['camera','lock','intercom','cable','fiber','wifi','av','shield','tools','pin','sparkle','sliders',
@@ -104,10 +105,16 @@
   /* ---------- auth ---------- */
   var state = { view:'settings', session:null };
 
-  sb.auth.getSession().then(function(r){ state.session = r.data.session; route(); });
+  (async function init(){
+    try { var r = await sb.auth.getSession(); state.session = (r && r.data) ? r.data.session : null; route(); }
+    catch(e){ fatal('Auth error: ' + (e && e.message || e)); }
+  })();
   sb.auth.onAuthStateChange(function(_e, session){ state.session = session; route(); });
 
-  function route(){ if(!state.session){ renderLogin(); } else { renderApp(); } }
+  function route(){
+    try { if(!state.session){ renderLogin(); } else { renderApp(); } }
+    catch(e){ fatal('Render error: ' + (e && e.message || e)); }
+  }
 
   function renderLogin(){
     app.innerHTML =
