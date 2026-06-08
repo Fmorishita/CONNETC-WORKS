@@ -173,7 +173,33 @@ the full database for **Phase 2 (Quotes + PDF, Follow-ups, Projects, Materials)*
 ### Security
 All Ops tables are **authenticated-only** (RLS) — no public access. Leads stay private.
 
-### Phase 2 (next)
-Quote Builder (line items, totals, templates) + professional **PDF** + Follow-up
-reminders + Projects + Materials checklist. Tables already created & seeded
-(quote templates included), so Phase 2 is UI only.
+### Phase 2 (built ✓)
+- **Quotes** — Quote Builder with templates, dynamic line items, live totals
+  (subtotal / discount / tax / total / auto deposit), warranty & terms, statuses.
+  Create from a lead or blank. **Generate PDF** (branded letterhead → *Save as PDF*
+  in the print dialog). *Mark Sent* auto-creates a follow-up; *Mark Approved* spins
+  up a project.
+- **Follow-ups** — list + due-today on the dashboard; suggested message prefilled.
+- **Projects** — created from approved quotes; status + materials status.
+- **Materials** — per-project checklist (item, qty, supplier, status), filterable.
+- **Advanced Route** — when a Google Maps key is set, the Route Planner shows an
+  **embedded map** and an **Optimize Automatically** button that reorders stops by
+  drive time and fills drive-time/distance. Without a key it stays in basic mode.
+
+### Google Maps API key (optional — enables the advanced route)
+The free multi-stop link + print work **without** a key. The embedded map and
+automatic optimization need a browser key:
+
+1. **console.cloud.google.com** → create/select a project → enable **Billing**.
+2. **APIs & Services → Library** → enable **Maps JavaScript API** and **Directions API**
+   (Geocoding API optional).
+3. **Credentials → Create credentials → API key.**
+4. **Restrict the key** (it ships in the browser):
+   - *Application restrictions → HTTP referrers*: add `https://*.vercel.app/*`,
+     your final domain (`https://yourdomain.com/*`) and `http://localhost:*/*`.
+   - *API restrictions*: limit to the APIs enabled in step 2.
+5. Paste it into [`js/cw-config.js`](js/cw-config.js) → `GOOGLE_MAPS_API_KEY: "…"`,
+   commit & push. The Route Planner detects it automatically.
+
+> The key is referrer-restricted, so exposing it in the browser is the standard,
+> safe pattern for the Maps JavaScript API.

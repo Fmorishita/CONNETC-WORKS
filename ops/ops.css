@@ -52,6 +52,24 @@
 .warn{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:10px 13px;font-size:.86rem;margin-bottom:12px}
 .fixedflag{color:#9a6700;font-weight:600;font-size:.74rem}
 
+/* embedded map */
+#map{width:100%;height:340px;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;background:#eef2f7}
+
+/* quote builder */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.li-head{display:flex;justify-content:space-between;align-items:center;margin:10px 0 6px}
+.li-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.li-table th{text-align:left;color:var(--muted);font-weight:600;padding:4px 6px;border-bottom:1px solid var(--line)}
+.li-table td{padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.li-table input,.li-table select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:7px;font-size:.85rem}
+.li-table .li-qty{width:64px}.li-table .li-price{width:90px}.li-table .li-total{white-space:nowrap;font-weight:600}
+.totals{max-width:320px;margin:12px 0 4px auto;font-size:.9rem}
+.totals>div{display:flex;justify-content:space-between;align-items:center;padding:5px 0}
+.totals input{width:110px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;text-align:right}
+.totals .grand{border-top:2px solid var(--blue);margin-top:6px;padding-top:8px;font-size:1.05rem}
+.totals .grand strong{color:var(--blue)}
+
 @media print{
   body *{visibility:hidden}
   #printArea,#printArea *{visibility:visible}
