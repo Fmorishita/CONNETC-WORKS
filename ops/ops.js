@@ -52,7 +52,7 @@
     else if(k.indexOf('install')>=0||k==='ordered'||k==='in progress'||k==='scheduled')cls='b-install';else if(k.indexOf('complete')>=0)cls='b-completed';
     return '<span class="b '+cls+'">'+esc(s||'—')+'</span>';}
   function prioBadge(p){var k=String(p||'Medium').toLowerCase();return '<span class="b b-'+k+'">'+esc(p||'Medium')+'</span>';}
-  function logAct(et,id,action,desc){ try{ sb.from('activity_log').insert({entity_type:et,entity_id:id||null,action:action,description:desc||null,created_by:(state.session&&state.session.user&&state.session.user.email)||null}); }catch(e){} }
+  function logAct(et,id,action,desc){ try{ sb.from('ops_activity_log').insert({entity_type:et,entity_id:id||null,action:action,description:desc||null,created_by:(state.session&&state.session.user&&state.session.user.email)||null}); }catch(e){} }
 
   function modal(title,inner,wide){
     var w=document.createElement('div');w.className='modal';
@@ -138,11 +138,11 @@
   async function renderDashboard(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
     var leads=(await sb.from('leads').select('*').order('created_at',{ascending:false})).data||[];
-    var visits=(await sb.from('visits').select('*').order('scheduled_date',{ascending:true})).data||[];
-    var quotes=(await sb.from('quotes').select('*').order('created_at',{ascending:false})).data||[];
-    var fups=(await sb.from('follow_ups').select('*').order('follow_up_date',{ascending:true})).data||[];
-    var projects=(await sb.from('projects').select('*')).data||[];
-    var materials=(await sb.from('project_materials').select('*')).data||[];
+    var visits=(await sb.from('ops_visits').select('*').order('scheduled_date',{ascending:true})).data||[];
+    var quotes=(await sb.from('ops_quotes').select('*').order('created_at',{ascending:false})).data||[];
+    var fups=(await sb.from('ops_follow_ups').select('*').order('follow_up_date',{ascending:true})).data||[];
+    var projects=(await sb.from('ops_projects').select('*')).data||[];
+    var materials=(await sb.from('ops_project_materials').select('*')).data||[];
     var t=today(), we=addDays(7); function low(s){return String(s||'').toLowerCase();}
     var newLeads=leads.filter(function(l){return low(l.status).indexOf('new')>=0;}).length;
     var attention=leads.filter(function(l){var s=low(l.status);return s.indexOf('new')>=0||s.indexOf('contact')>=0||s.indexOf('follow')>=0;});
@@ -247,7 +247,7 @@
   var calMode='week';
   async function renderCalendar(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
-    var visits=(await sb.from('visits').select('*').order('scheduled_date',{ascending:true}).order('start_time',{ascending:true})).data||[];
+    var visits=(await sb.from('ops_visits').select('*').order('scheduled_date',{ascending:true}).order('start_time',{ascending:true})).data||[];
     var t=today(), ed=addDays(calMode==='day'?0:13);
     var shown=visits.filter(function(v){return v.scheduled_date && v.scheduled_date>=t && v.scheduled_date<=ed;});
     var groups={};shown.forEach(function(v){(groups[v.scheduled_date]=groups[v.scheduled_date]||[]).push(v);});
@@ -259,7 +259,7 @@
     $('#mw').addEventListener('click',function(){calMode='week';renderCalendar();});
     $('#newVisit').addEventListener('click',function(){openVisit({status:'Scheduled',priority:'Medium',state:'CA',estimated_duration:60,scheduled_date:today()});});
     $$('[data-vedit]',c).forEach(function(b){b.addEventListener('click',function(){openVisit(visits.filter(function(x){return x.id===b.getAttribute('data-vedit');})[0]);});});
-    $$('[data-vdone]',c).forEach(function(b){b.addEventListener('click',async function(){var id=b.getAttribute('data-vdone');await sb.from('visits').update({status:'Completed'}).eq('id',id);logAct('visit',id,'Visit completed');toast('Marked completed.');renderCalendar();});});
+    $$('[data-vdone]',c).forEach(function(b){b.addEventListener('click',async function(){var id=b.getAttribute('data-vdone');await sb.from('ops_visits').update({status:'Completed'}).eq('id',id);logAct('visit',id,'Visit completed');toast('Marked completed.');renderCalendar();});});
   }
   function visitCard(v){
     var a=addrOf(v);
@@ -273,7 +273,7 @@
   function openVisit(row,lead){
     row=row||{};
     var m=modal(row.id?'Visit — '+(row.business_name||row.client_name||''):'New visit', formHtml(visitFields,row), true);
-    wireSave(m,visitFields,row,'visits',function(){ if(lead&&lead.id){sb.from('leads').update({status:'Site Visit Scheduled'}).eq('id',lead.id);} state.view='calendar'; renderApp(); }, function(saved){ logAct('visit',saved&&saved.id,'Visit scheduled',(row.business_name||row.client_name||'')); });
+    wireSave(m,visitFields,row,'ops_visits',function(){ if(lead&&lead.id){sb.from('leads').update({status:'Site Visit Scheduled'}).eq('id',lead.id);} state.view='calendar'; renderApp(); }, function(saved){ logAct('visit',saved&&saved.id,'Visit scheduled',(row.business_name||row.client_name||'')); });
   }
 
   /* ===================== ROUTE PLANNER (basic + advanced) ===================== */
@@ -291,7 +291,7 @@
   async function renderRoute(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
     var set=await loadSettings();
-    var visits=((await sb.from('visits').select('*').eq('scheduled_date',routeState.date).neq('status','Cancelled')).data||[])
+    var visits=((await sb.from('ops_visits').select('*').eq('scheduled_date',routeState.date).neq('status','Cancelled')).data||[])
       .sort(function(a,b){return (a.route_order||999)-(b.route_order||999)||String(a.start_time||'').localeCompare(String(b.start_time||''));});
     var withAddr=visits.filter(function(v){return addrOf(v);}), noAddr=visits.filter(function(v){return !addrOf(v);});
     routeState._visits=withAddr;
@@ -356,9 +356,9 @@
   }
   async function saveRoute(baseAddr){
     var url=buildMapsUrl(baseAddr);
-    for(var i=0;i<routeState._visits.length;i++){await sb.from('visits').update({route_order:i+1}).eq('id',routeState._visits[i].id);}
+    for(var i=0;i<routeState._visits.length;i++){await sb.from('ops_visits').update({route_order:i+1}).eq('id',routeState._visits[i].id);}
     var e=routeEndpoints(baseAddr);
-    await sb.from('daily_routes').upsert({route_date:routeState.date,start_address:e.start,end_address:e.end,google_maps_url:url,optimized:!!routeState._optimized,total_on_site_time:routeState._visits.reduce(function(s,v){return s+(v.estimated_duration||0);},0),total_drive_time:routeState._driveMin||null,total_distance:routeState._distMi||null},{onConflict:'route_date'});
+    await sb.from('ops_daily_routes').upsert({route_date:routeState.date,start_address:e.start,end_address:e.end,google_maps_url:url,optimized:!!routeState._optimized,total_on_site_time:routeState._visits.reduce(function(s,v){return s+(v.estimated_duration||0);},0),total_drive_time:routeState._driveMin||null,total_distance:routeState._distMi||null},{onConflict:'route_date'});
     logAct('route',null,'Route saved',routeState.date);toast('Route order saved ✓');
   }
   function printRoute(baseAddr,set){
@@ -412,7 +412,7 @@
   var quoteCache=[];
   async function renderQuotes(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
-    var r=await sb.from('quotes').select('*').order('created_at',{ascending:false});
+    var r=await sb.from('ops_quotes').select('*').order('created_at',{ascending:false});
     if(r.error){c.innerHTML='<div class="panel status status--err">'+esc(r.error.message)+'</div>';return;}
     quoteCache=r.data||[];
     c.innerHTML='<div class="toolbar"><input type="search" id="qq" placeholder="Search client, business, number…">'+sel('qfStatus','All statuses',QUOTE_STATUS)
@@ -437,9 +437,9 @@
   async function openQuote(row,lead){
     row=row||{};
     var set=await loadSettings();
-    var templates=((await sb.from('quote_templates').select('*').eq('active',true)).data)||[];
+    var templates=((await sb.from('ops_quote_templates').select('*').eq('active',true)).data)||[];
     var items=[];
-    if(row.id){items=((await sb.from('quote_line_items').select('*').eq('quote_id',row.id).order('sort_order',{ascending:true})).data)||[];}
+    if(row.id){items=((await sb.from('ops_quote_line_items').select('*').eq('quote_id',row.id).order('sort_order',{ascending:true})).data)||[];}
     var pct=set.default_deposit_percentage||50;
     var validUntil=row.valid_until||addDays(set.default_quote_validity_days||15);
     var warranty=row.warranty_text||set.default_warranty_text||'';
@@ -508,12 +508,12 @@
       var pkg=readQuote();
       if(!pkg.data.quote_number)pkg.data.quote_number=row.quote_number||genQuoteNumber();
       var res;
-      if(row.id)res=await sb.from('quotes').update(pkg.data).eq('id',row.id).select().maybeSingle();
-      else res=await sb.from('quotes').insert(pkg.data).select().maybeSingle();
+      if(row.id)res=await sb.from('ops_quotes').update(pkg.data).eq('id',row.id).select().maybeSingle();
+      else res=await sb.from('ops_quotes').insert(pkg.data).select().maybeSingle();
       if(res.error){st.className='status status--err';st.textContent=res.error.message;toast(res.error.message,true);return null;}
       var qid=res.data.id;
-      await sb.from('quote_line_items').delete().eq('quote_id',qid);
-      if(pkg.lines.length){var ins=pkg.lines.map(function(l){l.quote_id=qid;return l;});await sb.from('quote_line_items').insert(ins);}
+      await sb.from('ops_quote_line_items').delete().eq('quote_id',qid);
+      if(pkg.lines.length){var ins=pkg.lines.map(function(l){l.quote_id=qid;return l;});await sb.from('ops_quote_line_items').insert(ins);}
       if(lead&&lead.id)sb.from('leads').update({status:'Quote Sent'}).eq('id',lead.id);
       logAct('quote',qid,row.id?'Quote updated':'Quote created',pkg.data.quote_number);
       row.id=qid;row.quote_number=pkg.data.quote_number;
@@ -522,17 +522,17 @@
     }
     $('#qSave',m).addEventListener('click',async function(){var s=await save();if(s){m.close();renderQuotes();}});
     var pb=m.querySelector('[data-pdf]');if(pb)pb.addEventListener('click',async function(){var s=await save();if(s)printQuoteById(s.id);});
-    var sb2=m.querySelector('[data-sent]');if(sb2)sb2.addEventListener('click',async function(){var s=await save();if(!s)return;await sb.from('quotes').update({status:'Sent'}).eq('id',s.id);await createFollowupFromQuote(s,'First Follow-up',3);toast('Marked Sent + follow-up in 3 days.');m.close();renderQuotes();});
-    var ab=m.querySelector('[data-appr]');if(ab)ab.addEventListener('click',async function(){var s=await save();if(!s)return;await sb.from('quotes').update({status:'Approved'}).eq('id',s.id);m.close();state.view='projects';renderApp();setTimeout(function(){openProject(projectFromQuote(s));},60);});
+    var sb2=m.querySelector('[data-sent]');if(sb2)sb2.addEventListener('click',async function(){var s=await save();if(!s)return;await sb.from('ops_quotes').update({status:'Sent'}).eq('id',s.id);await createFollowupFromQuote(s,'First Follow-up',3);toast('Marked Sent + follow-up in 3 days.');m.close();renderQuotes();});
+    var ab=m.querySelector('[data-appr]');if(ab)ab.addEventListener('click',async function(){var s=await save();if(!s)return;await sb.from('ops_quotes').update({status:'Approved'}).eq('id',s.id);m.close();state.view='projects';renderApp();setTimeout(function(){openProject(projectFromQuote(s));},60);});
   }
   async function createFollowupFromQuote(q,type,days){
     var msg='Hi '+(q.client_name||'there')+', just following up on the quote we sent'+(q.quote_title?' for '+q.quote_title:'')+'. Happy to answer any questions or adjust anything to fit your needs. Let me know if you’d like to move forward. — ConnectWorks';
-    await sb.from('follow_ups').insert({quote_id:q.id,lead_id:q.lead_id||null,client_name:q.client_name,business_name:q.business_name,follow_up_date:addDays(days),follow_up_type:type,status:'Pending',suggested_message:msg});
+    await sb.from('ops_follow_ups').insert({quote_id:q.id,lead_id:q.lead_id||null,client_name:q.client_name,business_name:q.business_name,follow_up_date:addDays(days),follow_up_type:type,status:'Pending',suggested_message:msg});
     logAct('follow_up',q.id,'Follow-up scheduled',type);
   }
   async function printQuoteById(id){
-    var q=(await sb.from('quotes').select('*').eq('id',id).maybeSingle()).data;
-    var items=((await sb.from('quote_line_items').select('*').eq('quote_id',id).order('sort_order',{ascending:true})).data)||[];
+    var q=(await sb.from('ops_quotes').select('*').eq('id',id).maybeSingle()).data;
+    var items=((await sb.from('ops_quote_line_items').select('*').eq('quote_id',id).order('sort_order',{ascending:true})).data)||[];
     var set=await loadSettings();printQuote(q,items,set);
   }
   function printQuote(q,items,set){
@@ -577,7 +577,7 @@
   ];
   async function renderFollowups(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
-    var rows=((await sb.from('follow_ups').select('*').order('follow_up_date',{ascending:true})).data)||[];
+    var rows=((await sb.from('ops_follow_ups').select('*').order('follow_up_date',{ascending:true})).data)||[];
     var tr=rows.map(function(f){var due=f.status==='Pending'&&f.follow_up_date&&f.follow_up_date<=today();return '<tr'+(due?' style="background:#fff7ed"':'')+'>'
       +'<td>'+esc(f.follow_up_date||'')+'</td><td>'+esc(f.business_name||f.client_name||'')+'</td><td>'+esc(f.follow_up_type||'')+'</td><td>'+statusBadge(f.status)+'</td>'
       +'<td><div class="linkbtns"><button class="btn" data-fedit="'+f.id+'">Open</button>'+(f.status==='Pending'?'<button class="btn btn--primary" data-fdone="'+f.id+'">Done</button>':'')+'</div></td></tr>';}).join('')
@@ -586,9 +586,9 @@
       +'<table><thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Status</th><th></th></tr></thead><tbody>'+tr+'</tbody></table>';
     $('#newFup').addEventListener('click',function(){openFollowup({status:'Pending',follow_up_type:'First Follow-up',follow_up_date:addDays(3)});});
     $$('[data-fedit]',c).forEach(function(b){b.addEventListener('click',function(){openFollowup(rows.filter(function(x){return x.id===b.getAttribute('data-fedit');})[0]);});});
-    $$('[data-fdone]',c).forEach(function(b){b.addEventListener('click',async function(){await sb.from('follow_ups').update({status:'Done'}).eq('id',b.getAttribute('data-fdone'));toast('Follow-up done ✓');renderFollowups();});});
+    $$('[data-fdone]',c).forEach(function(b){b.addEventListener('click',async function(){await sb.from('ops_follow_ups').update({status:'Done'}).eq('id',b.getAttribute('data-fdone'));toast('Follow-up done ✓');renderFollowups();});});
   }
-  function openFollowup(row){var m=modal(row.id?'Follow-up':'New follow-up',formHtml(fupFields,row),true);wireSave(m,fupFields,row,'follow_ups',function(){renderFollowups();});}
+  function openFollowup(row){var m=modal(row.id?'Follow-up':'New follow-up',formHtml(fupFields,row),true);wireSave(m,fupFields,row,'ops_follow_ups',function(){renderFollowups();});}
 
   /* ===================== PROJECTS ===================== */
   var projFields=[
@@ -600,7 +600,7 @@
   ];
   async function renderProjects(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
-    var rows=((await sb.from('projects').select('*').order('created_at',{ascending:false})).data)||[];
+    var rows=((await sb.from('ops_projects').select('*').order('created_at',{ascending:false})).data)||[];
     var tr=rows.map(function(p){return '<tr><td><strong>'+esc(p.business_name||p.client_name||'')+'</strong><br><span class="muted">'+esc(p.service_category||'')+'</span></td>'
       +'<td>'+esc(p.start_date||'')+'</td><td>'+statusBadge(p.status)+'</td><td>'+statusBadge(p.materials_status)+'</td>'
       +'<td><div class="linkbtns"><button class="btn" data-pmat="'+p.id+'">Materials</button><button class="btn" data-pedit="'+p.id+'">Open</button></div></td></tr>';}).join('')
@@ -612,7 +612,7 @@
     $$('[data-pmat]',c).forEach(function(b){b.addEventListener('click',function(){var p=rows.filter(function(x){return x.id===b.getAttribute('data-pmat');})[0];state.view='materials';state._matProject=p.id;renderApp();});});
   }
   function projectFromQuote(q){return {quote_id:q.id,lead_id:q.lead_id||null,client_name:q.client_name,business_name:q.business_name,project_address:q.project_address,service_category:q.service_category,project_scope:q.quote_title,status:'Not Started',materials_status:'Not Started'};}
-  function openProject(row){var m=modal(row.id?'Project':'New project',formHtml(projFields,row),true);wireSave(m,projFields,row,'projects',function(){renderProjects();},function(s){logAct('project',s&&s.id,row.id?'Project updated':'Project created',(row.business_name||row.client_name||''));});}
+  function openProject(row){var m=modal(row.id?'Project':'New project',formHtml(projFields,row),true);wireSave(m,projFields,row,'ops_projects',function(){renderProjects();},function(s){logAct('project',s&&s.id,row.id?'Project updated':'Project created',(row.business_name||row.client_name||''));});}
 
   /* ===================== MATERIALS ===================== */
   var matFields=[
@@ -621,9 +621,9 @@
   ];
   async function renderMaterials(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
-    var projects=((await sb.from('projects').select('id,client_name,business_name').order('created_at',{ascending:false})).data)||[];
+    var projects=((await sb.from('ops_projects').select('id,client_name,business_name').order('created_at',{ascending:false})).data)||[];
     var pmap={};projects.forEach(function(p){pmap[p.id]=p.business_name||p.client_name||'Project';});
-    var qy=sb.from('project_materials').select('*').order('created_at',{ascending:false});
+    var qy=sb.from('ops_project_materials').select('*').order('created_at',{ascending:false});
     if(state._matProject)qy=qy.eq('project_id',state._matProject);
     var rows=((await qy).data)||[];
     var projFilter='<select id="mProj"><option value="">All projects</option>'+projects.map(function(p){return '<option value="'+p.id+'" '+(state._matProject===p.id?'selected':'')+'>'+esc(pmap[p.id])+'</option>';}).join('')+'</select>';
@@ -635,7 +635,7 @@
     $('#mProj').addEventListener('change',function(){state._matProject=this.value||null;renderMaterials();});
     $('#newMat').addEventListener('click',function(){openMaterial({status:'Needed',quantity:1,project_id:state._matProject||''},projects);});
     $$('[data-medit]',c).forEach(function(b){b.addEventListener('click',function(){openMaterial(rows.filter(function(x){return x.id===b.getAttribute('data-medit');})[0],projects);});});
-    $$('[data-mdel]',c).forEach(function(b){b.addEventListener('click',async function(){if(!confirm('Delete material?'))return;await sb.from('project_materials').delete().eq('id',b.getAttribute('data-mdel'));renderMaterials();});});
+    $$('[data-mdel]',c).forEach(function(b){b.addEventListener('click',async function(){if(!confirm('Delete material?'))return;await sb.from('ops_project_materials').delete().eq('id',b.getAttribute('data-mdel'));renderMaterials();});});
   }
   function openMaterial(row,projects){
     row=row||{};
@@ -644,7 +644,7 @@
     var form=$('#opf',m);m.querySelector('[data-cancel]').addEventListener('click',function(){m.close();});
     form.addEventListener('submit',async function(e){e.preventDefault();var st=$('#opfStatus',m);st.textContent='Saving…';
       var payload=readForm(matFields,m);payload.project_id=$('#of-project_id',m).value||null;
-      var res=row.id?await sb.from('project_materials').update(payload).eq('id',row.id):await sb.from('project_materials').insert(payload);
+      var res=row.id?await sb.from('ops_project_materials').update(payload).eq('id',row.id):await sb.from('ops_project_materials').insert(payload);
       if(res.error){st.className='status status--err';st.textContent=res.error.message;}else{toast('Saved');m.close();renderMaterials();}});
   }
 
@@ -658,7 +658,7 @@
   async function renderSettings(){
     var c=$('#c');c.innerHTML='<div class="center-msg">Loading…</div>';
     var row=(await sb.from('ops_settings').select('*').eq('id',1).maybeSingle()).data||{id:1};
-    var tm=((await sb.from('team_members').select('*').order('created_at',{ascending:true})).data)||[];
+    var tm=((await sb.from('ops_team_members').select('*').order('created_at',{ascending:true})).data)||[];
     c.innerHTML='<div class="panel"><h3>Company & Routes</h3>'+formHtml(setFields,row)+'</div>'
       +'<div class="panel"><div class="list-head"><h3>Team Members</h3><button class="btn btn--primary" id="newTm">'+ic('check',16)+' Add</button></div>'
       +'<table><thead><tr><th>Name</th><th>Role</th><th>Phone</th><th></th></tr></thead><tbody>'
@@ -668,10 +668,10 @@
     form.addEventListener('submit',async function(e){e.preventDefault();var st=$('#opfStatus');st.textContent='Saving…';var payload=readForm(setFields,scope);payload.id=1;var res=await sb.from('ops_settings').upsert(payload);if(res.error){st.className='status status--err';st.textContent=res.error.message;}else{st.className='status status--ok';st.textContent='Saved ✓';state._settings=payload;toast('Settings saved');}});
     $('#newTm').addEventListener('click',function(){openTeam({active:true});});
     $$('[data-tme]',scope).forEach(function(b){b.addEventListener('click',function(){openTeam(tm.filter(function(x){return x.id===b.getAttribute('data-tme');})[0]);});});
-    $$('[data-tmd]',scope).forEach(function(b){b.addEventListener('click',async function(){if(!confirm('Delete team member?'))return;await sb.from('team_members').delete().eq('id',b.getAttribute('data-tmd'));renderSettings();});});
+    $$('[data-tmd]',scope).forEach(function(b){b.addEventListener('click',async function(){if(!confirm('Delete team member?'))return;await sb.from('ops_team_members').delete().eq('id',b.getAttribute('data-tmd'));renderSettings();});});
   }
   var tmFields=[{n:'name',req:true},{n:'role'},{n:'phone'},{n:'email'},{n:'active',l:'Active',t:'bool'}];
-  function openTeam(row){var m=modal(row.id?'Edit team member':'Add team member',formHtml(tmFields,row));wireSave(m,tmFields,row,'team_members',function(){renderSettings();});}
+  function openTeam(row){var m=modal(row.id?'Edit team member':'Add team member',formHtml(tmFields,row));wireSave(m,tmFields,row,'ops_team_members',function(){renderSettings();});}
 
   /* ----- shared save wiring for modals ----- */
   function wireSave(m,fields,row,table,after,onSaved){

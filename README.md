@@ -157,6 +157,10 @@ the full database for **Phase 2 (Quotes + PDF, Follow-ups, Projects, Materials)*
 ### Setup (one time)
 1. Supabase → SQL Editor → run [`supabase/ops_schema.sql`](supabase/ops_schema.sql)
    (creates all Ops tables, private RLS, and seed; extends `leads`).
+   All Ops tables are prefixed **`ops_`** (e.g. `ops_visits`, `ops_quotes`) so they
+   never collide with other apps sharing the same Supabase project; only `leads`
+   is shared. *(Optional)* load demo data with
+   [`supabase/ops_sample_data.sql`](supabase/ops_sample_data.sql).
 2. Use the same admin user you created for the CMS. Go to **`/ops`** and sign in.
 3. In **Settings**, set your **Base address** (used as the route start/end).
 4. *(Optional)* Google Maps API key enables auto-optimization later; without it the
