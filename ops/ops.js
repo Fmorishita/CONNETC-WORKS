@@ -122,10 +122,15 @@
   function renderApp(){
     var nav=NAV.map(function(n){return '<button class="navitem'+(state.view===n.k?' navitem--on':'')+'" data-go="'+n.k+'">'+ic(n.i,18)+' <span>'+n.l+'</span></button>';}).join('');
     app.innerHTML='<div class="app"><aside class="sidebar"><div class="brand"><img src="/assets/logo-connectworks.png" alt=""> Ops Hub</div><div class="grp">Operations</div>'+nav
-      +'</aside><div class="main"><div class="topbar"><h2 id="pt"></h2><div class="right">'
-      +'<a class="btn" href="/admin" target="_blank">'+ic('sliders',18)+' Website CMS</a>'
+      +'</aside><div class="nav-backdrop" id="navBackdrop"></div><div class="main"><div class="topbar">'
+      +'<button class="btn btn--ghost navtoggle" id="navToggle" aria-label="Menu">☰</button>'
+      +'<h2 id="pt"></h2><div class="right">'
+      +'<a class="btn cms-link" href="/admin" target="_blank">'+ic('sliders',18)+' Website CMS</a>'
       +'<button class="btn btn--ghost" id="lo">Logout</button></div></div><div class="content" id="c"></div></div></div>';
-    $$('[data-go]').forEach(function(b){b.addEventListener('click',function(){state.view=b.getAttribute('data-go');renderApp();});});
+    var appEl=$('.app');
+    var nt=$('#navToggle'); if(nt) nt.addEventListener('click',function(){appEl.classList.toggle('nav-open');});
+    var nb=$('#navBackdrop'); if(nb) nb.addEventListener('click',function(){appEl.classList.remove('nav-open');});
+    $$('[data-go]').forEach(function(b){b.addEventListener('click',function(){state.view=b.getAttribute('data-go');appEl.classList.remove('nav-open');renderApp();});});
     $('#lo').addEventListener('click',function(){sb.auth.signOut();});
     $('#pt').textContent=LABELS[state.view];
     ({dashboard:renderDashboard,leads:renderLeads,calendar:renderCalendar,route:renderRoute,quotes:renderQuotes,followups:renderFollowups,projects:renderProjects,materials:renderMaterials,settings:renderSettings}[state.view])();

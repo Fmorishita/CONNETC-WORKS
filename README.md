@@ -207,3 +207,17 @@ automatic optimization need a browser key:
 
 > The key is referrer-restricted, so exposing it in the browser is the standard,
 > safe pattern for the Maps JavaScript API.
+
+---
+
+## 🔒 Private preview (password gate)
+
+The public marketing site is gated by **`middleware.js`** (Vercel Edge
+Middleware). Visitors see a branded password page; entering the password sets a
+cookie (90 days) and reveals the site. **Password: `2026`** (change `PASSWORD`
+in `middleware.js`). `/ops`, `/admin`, `/api` and static assets are excluded —
+the Ops Hub & CMS keep their own Supabase login.
+
+> The "This site is currently unavailable" screen is a **Vercel project-level**
+> state (project paused / production disabled), not in the repo. To go live:
+> re-enable the project in **Vercel → Settings**, then this gate protects it.
