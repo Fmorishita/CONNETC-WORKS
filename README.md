@@ -4,6 +4,8 @@ Modern, conversion-focused marketing site for **ConnectWorks Low Voltage Solutio
 
 Lightweight static site (HTML + CSS + vanilla JS) with one **Vercel serverless function** that saves quote requests into **Supabase**. Fast-loading and ready for a future **Meta Ads** stage (UTM capture, CTA tracking, pixel scaffolding, thank-you page).
 
+It now includes an **admin CMS** (`/admin`) so the owner can edit content without code — see **[Admin panel (CMS)](#-admin-panel-cms)**.
+
 ---
 
 ## ✨ Highlights
@@ -71,3 +73,151 @@ Already connected to Vercel? Every branch/PR gets an automatic **preview URL** (
 - All primary buttons carry `data-cta` (`request-commercial-quote`, `call-now`) and emit `dataLayer` events + pixel events when a pixel is configured.
 - Meta Pixel is scaffolded but **off** until you set `META_PIXEL_ID`; it fires `Lead` on successful submit.
 - `/thank-you.html` is available as a URL-based conversion destination.
+
+---
+
+## 🛠 Admin panel (CMS)
+
+A lightweight CMS so Omar can edit the site without touching code. Built **on the
+existing static site** (no framework rewrite) using **Supabase** for Auth, the
+database, and image storage. The public page reads content from Supabase and
+**falls back to the built-in HTML** if the CMS is empty or unreachable — so the
+site never breaks.
+
+### What you can edit
+General settings (company info, phone, email, social links, **license status**,
+review rating, logo/favicon/OG image) · Hero · CTA banner · Trust badges ·
+Services · Industries · Why-Choose-Us · Process · Problems · Projects/Gallery ·
+Reviews · SEO · Leads (with status) · Media library · Icon picker.
+
+### One-time setup (≈10 min)
+1. **Create the tables:** Supabase → SQL Editor → run [`supabase/cms_schema.sql`](supabase/cms_schema.sql).
+   It creates all content tables, security rules (RLS), the public `media` storage
+   bucket, and seeds the current site content.
+2. **Connect the site to Supabase:** open `js/cw-config.js` and paste your
+   **anon/public key** (Supabase → Settings → API). The URL is already filled.
+   *(The anon key is safe to expose — RLS only allows writes to logged-in admins.)*
+3. **Create the admin user:** Supabase → Authentication → Users → **Add user**
+   (email + password) and mark it confirmed. (There is no public sign-up — login only.)
+4. Go to **`/admin`**, sign in, and start editing.
+
+### How to use it
+- **Edit text:** open a section (e.g. *Home / Hero*), change the fields, **Save**.
+  Tip: in the H1, wrap the highlighted words in `**double asterisks**`.
+- **Upload images:** any image field has **Choose / upload** → opens the Media
+  Library (or use *Media Library* in the sidebar). Uploads go to Supabase Storage.
+- **Change icons:** any icon field opens an **icon picker**; the chosen name is
+  stored as a string and rendered on the site.
+- **Add Services / Industries / Projects / Reviews:** open the section → **New** →
+  fill in → Save. Use **Active** to show/hide and **sort order** to reorder.
+  Delete asks for confirmation.
+- **Licenses:** in *General Settings*, toggle **Has licenses?** — the site flips
+  between "Licensed & Insured" and the professional / available-on-request text.
+- **Leads:** the *Leads* tab lists form submissions and lets you set a status
+  (new → contacted → quoted → won → lost).
+- **Preview:** the **Preview site** button (top-right) opens the live site.
+
+### Environment variables
+| Where | Var | Purpose |
+|---|---|---|
+| `js/cw-config.js` | `SUPABASE_ANON_KEY` | Public read + admin auth (browser-safe) |
+| Vercel env | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Lead-capture function (server-side) |
+| Vercel env (optional) | `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL` | Email each lead (see above) |
+
+### Deploy
+Static site — deploy on Vercel as before. The CMS needs **no build step**.
+After step 1–3 above, `/admin` works in production. Public content updates appear
+on the next page load (no redeploy needed for content changes).
+
+### Security
+RLS: anyone can **read** content; only **authenticated** admins can write. Leads
+are **not** publicly readable. Storage `media` bucket is public-read, admin-write.
+The service-role key is never exposed to the browser (server-side function only).
+
+### Known limitations / TODO
+- **SEO** edits hydrate client-side (good for users & Google's JS rendering, not as
+  strong as server-rendered). For perfect SEO control, a Next.js build would be needed.
+- Public hydration currently covers Hero, CTA banner, Services, Industries,
+  Why-Us, Process, Problems, Reviews, Trust badges, contact info, social links,
+  license text and SEO. **Footer link lists and the contact-form field options**
+  are editable in the data model but still render from static HTML — wiring those
+  to the CMS is the next step (same `data-cw` / renderer pattern).
+- Projects/Gallery is fully editable in admin; wiring it to replace the public
+  gallery tiles is a follow-up (pattern identical to Services).
+
+---
+
+## 🧰 Operations Hub (`/ops`) — Phase 1: Schedule + Routes
+
+Private internal tool for Omar (separate from the public CMS at `/admin`). Same
+stack (static SPA + Supabase Auth/DB), same login users. **Phase 1** ships:
+**Dashboard, Leads, Calendar/Visits, Route Planner (basic mode), Settings**, plus
+the full database for **Phase 2 (Quotes + PDF, Follow-ups, Projects, Materials)**.
+
+### Setup (one time)
+1. Supabase → SQL Editor → run [`supabase/ops_schema.sql`](supabase/ops_schema.sql)
+   (creates all Ops tables, private RLS, and seed; extends `leads`).
+   All Ops tables are prefixed **`ops_`** (e.g. `ops_visits`, `ops_quotes`) so they
+   never collide with other apps sharing the same Supabase project; only `leads`
+   is shared. *(Optional)* load demo data with
+   [`supabase/ops_sample_data.sql`](supabase/ops_sample_data.sql).
+2. Use the same admin user you created for the CMS. Go to **`/ops`** and sign in.
+3. In **Settings**, set your **Base address** (used as the route start/end).
+4. *(Optional)* Google Maps API key enables auto-optimization later; without it the
+   Route Planner runs in **basic mode** (manual order + full multi-stop Google Maps link).
+
+### How to…
+- **Add a lead:** Leads → *New lead* (or they arrive automatically from the website form).
+- **Schedule a visit:** open a lead → *Schedule Site Visit* (prefills the data), or Calendar → *New visit*.
+- **Optimize a route:** Route Planner → pick the date → set Start/End → reorder stops (▲▼) → **Open Route in Google Maps** (multi-stop) → **Save Route Order**.
+- **Open in Google Maps:** every lead/visit has a Maps button; the planner builds the full route link.
+- **Print the day:** Route Planner → **Print Daily Route** (client, address, phone, service, priority, time, notes).
+- **Settings:** company info, base address, defaults, team members.
+
+### Security
+All Ops tables are **authenticated-only** (RLS) — no public access. Leads stay private.
+
+### Phase 2 (built ✓)
+- **Quotes** — Quote Builder with templates, dynamic line items, live totals
+  (subtotal / discount / tax / total / auto deposit), warranty & terms, statuses.
+  Create from a lead or blank. **Generate PDF** (branded letterhead → *Save as PDF*
+  in the print dialog). *Mark Sent* auto-creates a follow-up; *Mark Approved* spins
+  up a project.
+- **Follow-ups** — list + due-today on the dashboard; suggested message prefilled.
+- **Projects** — created from approved quotes; status + materials status.
+- **Materials** — per-project checklist (item, qty, supplier, status), filterable.
+- **Advanced Route** — when a Google Maps key is set, the Route Planner shows an
+  **embedded map** and an **Optimize Automatically** button that reorders stops by
+  drive time and fills drive-time/distance. Without a key it stays in basic mode.
+
+### Google Maps API key (optional — enables the advanced route)
+The free multi-stop link + print work **without** a key. The embedded map and
+automatic optimization need a browser key:
+
+1. **console.cloud.google.com** → create/select a project → enable **Billing**.
+2. **APIs & Services → Library** → enable **Maps JavaScript API** and **Directions API**
+   (Geocoding API optional).
+3. **Credentials → Create credentials → API key.**
+4. **Restrict the key** (it ships in the browser):
+   - *Application restrictions → HTTP referrers*: add `https://*.vercel.app/*`,
+     your final domain (`https://yourdomain.com/*`) and `http://localhost:*/*`.
+   - *API restrictions*: limit to the APIs enabled in step 2.
+5. Paste it into [`js/cw-config.js`](js/cw-config.js) → `GOOGLE_MAPS_API_KEY: "…"`,
+   commit & push. The Route Planner detects it automatically.
+
+> The key is referrer-restricted, so exposing it in the browser is the standard,
+> safe pattern for the Maps JavaScript API.
+
+---
+
+## 🔒 Private preview (password gate)
+
+The public marketing site is gated by **`middleware.js`** (Vercel Edge
+Middleware). Visitors see a branded password page; entering the password sets a
+cookie (90 days) and reveals the site. **Password: `2026`** (change `PASSWORD`
+in `middleware.js`). `/ops`, `/admin`, `/api` and static assets are excluded —
+the Ops Hub & CMS keep their own Supabase login.
+
+> The "This site is currently unavailable" screen is a **Vercel project-level**
+> state (project paused / production disabled), not in the repo. To go live:
+> re-enable the project in **Vercel → Settings**, then this gate protects it.
